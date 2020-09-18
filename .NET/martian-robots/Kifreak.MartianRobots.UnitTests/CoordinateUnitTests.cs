@@ -30,6 +30,13 @@ namespace Kifreak.MartianRobots.UnitTests
             Assert.Throws<PositionException>(() => new Position(x, y,orientation));
         }
 
+        [Fact]
+        public void ToStringTest()
+        {
+            Position position = new Position(5,10,90);
+            Assert.Equal("5 10 E", position.ToString());
+        }
+
         
     }
 }

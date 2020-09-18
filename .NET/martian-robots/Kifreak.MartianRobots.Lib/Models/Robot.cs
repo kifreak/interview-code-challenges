@@ -10,5 +10,10 @@ namespace Kifreak.MartianRobots.Lib.Models
         }
 
         public IPosition CurrentPosition { get; }
+
+        public override string ToString()
+        {
+            return CurrentPosition.ToString();
+        }
     }
 }
