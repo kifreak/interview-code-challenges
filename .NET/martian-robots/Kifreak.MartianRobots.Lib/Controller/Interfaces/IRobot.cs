@@ -1,14 +1,15 @@
-﻿using Kifreak.MartianRobots.Lib.Models.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Models;
+using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
 {
-    public interface IRobotEngine
+    public interface IRobot
     {
-        IRobot Robot { get; }
+        Position CurrentPosition { get; }
+        ERobotStatus Status { get; }
         IRobotMovement Movement { get; }
         IAvoidArea AvoidArea { get; }
         void TurnLeft();
-
         void TurnRight();
         void MoveForward();
     }

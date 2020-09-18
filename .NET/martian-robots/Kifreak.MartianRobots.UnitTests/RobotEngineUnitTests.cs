@@ -9,11 +9,11 @@ namespace Kifreak.MartianRobots.UnitTests
 {
     public class RobotEngineUnitTests: IDisposable
     {
-        private RobotEngine _engine;
+        private Robot _robot;
         public RobotEngineUnitTests()
         {
-            _engine = new RobotEngine(
-                new Robot(new Position(0,0,0)),
+            _robot = new Robot(
+                new Position(0,0,0),
                 new RobotMovement(), 
                 new AvoidArea()
                 );
@@ -21,27 +21,27 @@ namespace Kifreak.MartianRobots.UnitTests
         [Fact]
         public void MoveLeftOk()
         {
-            _engine.TurnLeft();
-            Assert.Equal(270, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnLeft();
-            Assert.Equal(180, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnLeft();
-            Assert.Equal(90, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnLeft();
-            Assert.Equal(0, _engine.Robot.CurrentPosition.Orientation);
+            _robot.TurnLeft();
+            Assert.Equal(270, _robot.CurrentPosition.Orientation);
+            _robot.TurnLeft();
+            Assert.Equal(180, _robot.CurrentPosition.Orientation);
+            _robot.TurnLeft();
+            Assert.Equal(90, _robot.CurrentPosition.Orientation);
+            _robot.TurnLeft();
+            Assert.Equal(0, _robot.CurrentPosition.Orientation);
         }
 
         [Fact]
         public void MoveRightOk()
         {
-            _engine.TurnRight();
-            Assert.Equal(90, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnRight();
-            Assert.Equal(180, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnRight();
-            Assert.Equal(270, _engine.Robot.CurrentPosition.Orientation);
-            _engine.TurnRight();
-            Assert.Equal(0, _engine.Robot.CurrentPosition.Orientation);
+            _robot.TurnRight();
+            Assert.Equal(90, _robot.CurrentPosition.Orientation);
+            _robot.TurnRight();
+            Assert.Equal(180, _robot.CurrentPosition.Orientation);
+            _robot.TurnRight();
+            Assert.Equal(270, _robot.CurrentPosition.Orientation);
+            _robot.TurnRight();
+            Assert.Equal(0, _robot.CurrentPosition.Orientation);
         }
 
         [Fact]
@@ -57,10 +57,10 @@ namespace Kifreak.MartianRobots.UnitTests
             };
             List<Position> realPositions = new List<Position>();
             realPositions.Add(MoveForwards());
-            _engine.TurnRight();
+            _robot.TurnRight();
             realPositions.Add(MoveForwards());
             realPositions.Add(MoveForwards());
-            _engine.TurnLeft();
+            _robot.TurnLeft();
             realPositions.Add(MoveForwards());
             realPositions.Add(MoveForwards());
             Assert.NotEmpty(realPositions);
@@ -73,18 +73,18 @@ namespace Kifreak.MartianRobots.UnitTests
 
         private Position MoveForwards()
         {
-            _engine.MoveForward();
-            return new Position(_engine.Robot.CurrentPosition.X, _engine.Robot.CurrentPosition.Y, _engine.Robot.CurrentPosition.Orientation);
+            _robot.MoveForward();
+            return new Position(_robot.CurrentPosition.X, _robot.CurrentPosition.Y, _robot.CurrentPosition.Orientation);
         }
 
-        //[Fact]
+        //[Fact]    
         //public void MoveForwardImpossiblePosition()
         //{
         //    throw new NotImplementedException();
         //}
         public void Dispose()
         {
-            _engine = null;
+            _robot = null;
         }
     }
 }

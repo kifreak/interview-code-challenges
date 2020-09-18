@@ -2,6 +2,7 @@
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
+using Newtonsoft.Json.Serialization;
 using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
@@ -36,12 +37,17 @@ namespace Kifreak.MartianRobots.UnitTests
             {
                 RobotManager manager = new RobotManager(new AvoidArea(), new GridSize(5, 5));
                 RobotMovement robotMovement = new RobotMovement();
-                manager.AddRobotEngines(new Robot(new Position(0,0,0)), robotMovement);
-                manager.AddRobotEngines(new Robot(new Position(1,1,0)), robotMovement );
+                AvoidArea avoidArea = new AvoidArea();
+                manager.AddRobotEngines(
+                    new Robot(
+                    new Position(0,0,0), robotMovement,avoidArea));
+                manager.AddRobotEngines(
+                    new Robot(
+                        new Position(1, 1, 0), robotMovement, avoidArea));
                 Assert.NotEmpty(manager.RobotEngines);
                 Assert.Equal(2, manager.RobotEngines.Count);
-                Assert.Equal(0, manager.RobotEngines.First().Robot.CurrentPosition.X);
-                Assert.Equal(1, manager.RobotEngines.Last().Robot.CurrentPosition.X);
+                Assert.Equal(0, manager.RobotEngines.First().CurrentPosition.X);
+                Assert.Equal(1, manager.RobotEngines.Last().CurrentPosition.X);
             }
 
 

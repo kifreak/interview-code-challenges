@@ -11,19 +11,17 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public GridSize Grid { get; }
 
-        public List<RobotEngine> RobotEngines;
+        public List<IRobot> RobotEngines;
         public RobotManager(IAvoidArea avoidArea, GridSize grid)
         {
             AvoidArea = avoidArea;
             Grid = grid;
-            RobotEngines = new List<RobotEngine>();
+            RobotEngines = new List<IRobot>();
         }
 
-        public void AddRobotEngines(IRobot robot,IRobotMovement movement )
+        public void AddRobotEngines(IRobot robot)
         {
-            RobotEngines.Add(new RobotEngine(
-                robot,movement, AvoidArea
-            ));
+            RobotEngines.Add(robot);
         }
         
     }
