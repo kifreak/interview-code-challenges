@@ -18,7 +18,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
         {
             return _instanceCreator.ContainsKey(orientation)
                 ? Activator.CreateInstance(_instanceCreator[orientation]) as IMovementController
-                : Activator.CreateInstance<NoMoveController>() as IMovementController;
+                : Activator.CreateInstance<NoMoveController>();
         }
     }
 }
