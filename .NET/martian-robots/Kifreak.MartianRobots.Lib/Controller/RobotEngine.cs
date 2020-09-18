@@ -3,10 +3,11 @@ using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
-    public class RobotEngine
+    public class RobotEngine: IRobotEngine
     {
         public IRobot Robot { get; }
-        public IRobotMovement Movement { get; }
+
+                public IRobotMovement Movement { get; }
         public IAvoidArea AvoidArea { get; }
 
         public RobotEngine(IRobot robot, IRobotMovement movement, IAvoidArea avoidArea)
