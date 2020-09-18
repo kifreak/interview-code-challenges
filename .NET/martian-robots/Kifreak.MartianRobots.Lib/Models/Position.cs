@@ -1,9 +1,10 @@
-﻿using Kifreak.MartianRobots.Lib.Exceptions;
+﻿using System;
+using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Models
 {
-    public class Position: IPosition 
+    public class Position
     {
         private int _x;
         private int _y;
@@ -35,7 +36,6 @@ namespace Kifreak.MartianRobots.Lib.Models
         {
             return $"{X} {Y} {(EOrientation)Orientation}";
         }
-
         private bool IsValidCoordinate(int coordinate)
         {
             return coordinate >= 0 && coordinate <= 50;

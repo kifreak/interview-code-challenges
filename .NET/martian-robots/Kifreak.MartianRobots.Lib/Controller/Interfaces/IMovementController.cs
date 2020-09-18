@@ -1,10 +1,10 @@
-﻿using Kifreak.MartianRobots.Lib.Models.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Models;
 
 namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
 {
     public interface IMovementController
     {
         string Name { get; }
-        void Move(IRobot robot);
+        Position GetNextPosition(Position position);
     }
 }

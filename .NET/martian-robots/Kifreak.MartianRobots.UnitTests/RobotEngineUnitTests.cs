@@ -9,10 +9,14 @@ namespace Kifreak.MartianRobots.UnitTests
 {
     public class RobotEngineUnitTests: IDisposable
     {
-        private IRobotEngine _engine;
+        private RobotEngine _engine;
         public RobotEngineUnitTests()
         {
-            _engine = new RobotEngine(new Robot(new Position(0,0,0)));
+            _engine = new RobotEngine(
+                new Robot(new Position(0,0,0)),
+                new RobotMovement(), 
+                new AvoidArea()
+                );
         }
         [Fact]
         public void MoveLeftOk()
@@ -69,7 +73,7 @@ namespace Kifreak.MartianRobots.UnitTests
 
         private Position MoveForwards()
         {
-            _engine.MoveForwards();
+            _engine.MoveForward();
             return new Position(_engine.Robot.CurrentPosition.X, _engine.Robot.CurrentPosition.Y, _engine.Robot.CurrentPosition.Orientation);
         }
 

@@ -1,42 +1,38 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
-using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
-using Kifreak.MartianRobots.Lib.Models;
 using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
-    public class RobotEngine: IRobotEngine
+    public class RobotEngine
     {
-        public RobotEngine(IRobot robot)
+        public IRobot Robot { get; }
+        public IRobotMovement Movement { get; }
+        public IAvoidArea AvoidArea { get; }
+
+        public RobotEngine(IRobot robot, IRobotMovement movement, IAvoidArea avoidArea)
         {
             Robot = robot;
+            Movement = movement;
+            AvoidArea = avoidArea;
         }
-        public IRobot Robot { get; }
 
         public void TurnLeft()
         {
-            MoveOrientation(-90);
+            Robot.CurrentPosition.Orientation = Movement.TurnLeft(Robot.CurrentPosition.Orientation);
         }
 
         public void TurnRight()
         {
-            MoveOrientation(90);
+            Robot.CurrentPosition.Orientation = Movement.TurnRight(Robot.CurrentPosition.Orientation);
         }
 
-        public void MoveForwards()
+        public void MoveForward()
         {
-            RobotMoveFactory factory = new RobotMoveFactory();
-            IMovementController movement = factory.CreateInstance(Robot.CurrentPosition.Orientation);
-            movement.Move(Robot);
-        }
-        
-        private void MoveOrientation(int degrees)
-        {
-            int currentPosition = Robot.CurrentPosition.Orientation + degrees;
-            currentPosition = currentPosition < 0 ? 
-                270 : currentPosition > 270 ? 
-                    0 : currentPosition;
-            Robot.CurrentPosition.Orientation = currentPosition;
+            var nextPosition = Movement.MoveForwards(Robot.CurrentPosition);
+            if (!AvoidArea.IsAvoidArea(nextPosition))
+            {
+                Robot.CurrentPosition = nextPosition;
+            }
         }
     }
 }

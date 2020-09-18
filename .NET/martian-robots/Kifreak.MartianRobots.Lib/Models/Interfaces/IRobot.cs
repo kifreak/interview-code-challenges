@@ -1,7 +1,11 @@
-﻿namespace Kifreak.MartianRobots.Lib.Models.Interfaces
+﻿using System.Net;
+
+namespace Kifreak.MartianRobots.Lib.Models.Interfaces
 {
     public interface IRobot
     {
-        IPosition CurrentPosition { get; }
+        Position CurrentPosition { get; set; }
+
+        ERobotStatus Status { get; set; }
     }
 }

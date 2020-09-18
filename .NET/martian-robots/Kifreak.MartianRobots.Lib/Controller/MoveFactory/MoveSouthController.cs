@@ -1,4 +1,5 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+using Kifreak.MartianRobots.Lib.Models;
 using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
@@ -7,9 +8,9 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
     {
         public string Name => "South";
 
-        public void Move(IRobot robot)
+        public Position GetNextPosition(Position position)
         {
-            robot.CurrentPosition.Y--;
+            return new Position(position.X, position.Y -1, position.Orientation);
         }
     }
 }
