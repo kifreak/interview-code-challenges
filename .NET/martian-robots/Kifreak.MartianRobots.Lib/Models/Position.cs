@@ -1,6 +1,4 @@
-﻿using System;
-using Kifreak.MartianRobots.Lib.Exceptions;
-using Kifreak.MartianRobots.Lib.Models.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Exceptions;
 
 namespace Kifreak.MartianRobots.Lib.Models
 {

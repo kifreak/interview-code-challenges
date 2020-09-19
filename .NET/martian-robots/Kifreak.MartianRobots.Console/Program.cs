@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Kifreak.MartianRobots.Console
+﻿namespace Kifreak.MartianRobots.Console
 {
     class Program
     {

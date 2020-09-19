@@ -1,24 +1,29 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Models;
-using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
     public class Robot: IRobot
     {
         public Position CurrentPosition { get; private set; }
-        public ERobotStatus Status { get; private set; }
-        public IRobotMovement Movement { get; }
+        public ERobotStatus Status { get; }
+        public IRobotMovement Movement { get; set; }
+        public Instructions Instructions { get; }
         public IAvoidArea AvoidArea { get; }
 
-        public Robot(Position startPosition, IRobotMovement movement, IAvoidArea avoidArea)
+        public Robot(Position startPosition, 
+            IRobotMovement movement, 
+            IAvoidArea avoidArea,
+            Instructions instructions)
         {
             CurrentPosition = startPosition;
             Status = ERobotStatus.Ok;
             Movement = movement;
             AvoidArea = avoidArea;
+            Instructions = instructions;
         }
 
+        
         public void TurnLeft()
         {
             CurrentPosition.Orientation = Movement.TurnLeft(CurrentPosition.Orientation);

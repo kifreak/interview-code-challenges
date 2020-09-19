@@ -1,5 +1,4 @@
 ﻿using Kifreak.MartianRobots.Lib.Models;
-using Kifreak.MartianRobots.Lib.Models.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
 {
@@ -7,10 +6,14 @@ namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
     {
         Position CurrentPosition { get; }
         ERobotStatus Status { get; }
-        IRobotMovement Movement { get; }
+        IRobotMovement Movement { get; set; }
+        Instructions Instructions { get; }
         IAvoidArea AvoidArea { get; }
+
         void TurnLeft();
         void TurnRight();
         void MoveForward();
+
+
     }
 }

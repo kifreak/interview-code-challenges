@@ -1,13 +1,14 @@
-﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
+using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
-    public class RobotMoveFactoryUnitTests
+    public class FactoriesUnitTests
     {
         [Fact]
-        public void MoveOk()
+        public void RobotMoveFactoryTest()
         {
             IRobotMoveFactory factory = new RobotMoveFactory();
             IMovementController instanceNorth = factory.CreateInstance(0);
@@ -21,5 +22,20 @@ namespace Kifreak.MartianRobots.UnitTests
             Assert.Equal("West", instanceWest.Name);
             Assert.Equal("Nowhere", instanceNull.Name);
         }
+
+        [Fact]
+        public void ActionFactoryTest()
+        {
+            IActionFactory action = new ActionFactory();
+            IActionController leftAction = action.CreateInstance("L");
+            IActionController rightAction = action.CreateInstance("R");
+            IActionController forwardAction = action.CreateInstance("F");
+            IActionController nullAction = action.CreateInstance("NoExist");
+            Assert.Equal("L", leftAction.Name);
+            Assert.Equal("R", rightAction.Name);
+            Assert.Equal("F", forwardAction.Name);
+            Assert.Equal("NoAction", nullAction.Name);
+        }
+        
     }
 }

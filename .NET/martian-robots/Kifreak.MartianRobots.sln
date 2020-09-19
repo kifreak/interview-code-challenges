@@ -9,11 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.Console", "Kifreak.MartianRobots.Console\Kifreak.MartianRobots.Console.csproj", "{99661893-6164-4D8E-9B98-13ABDE67CC49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Console", "Kifreak.MartianRobots.Console\Kifreak.MartianRobots.Console.csproj", "{99661893-6164-4D8E-9B98-13ABDE67CC49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.Lib", "Kifreak.MartianRobots.Lib\Kifreak.MartianRobots.Lib.csproj", "{46E05C75-BEFB-4A13-A916-21F160D12817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Lib", "Kifreak.MartianRobots.Lib\Kifreak.MartianRobots.Lib.csproj", "{46E05C75-BEFB-4A13-A916-21F160D12817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.UnitTests", "Kifreak.MartianRobots.UnitTests\Kifreak.MartianRobots.UnitTests.csproj", "{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.UnitTests", "Kifreak.MartianRobots.UnitTests\Kifreak.MartianRobots.UnitTests.csproj", "{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.IntegratedTests", "Kifreak.MartianRobots.IntegratedTests\Kifreak.MartianRobots.IntegratedTests.csproj", "{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Tests", "03. Tests", "{0CBD72E2-2216-4E5B-9375-B5E437D9D49A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Front", "01. Front", "{27E1A155-511C-4D01-98B4-17959D631882}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Back-end", "02. Back-end", "{BDFAA533-6794-4999-A6FB-5E31B904FC54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,9 +69,27 @@ Global
 		{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}.Release|x64.Build.0 = Release|Any CPU
 		{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}.Release|x86.ActiveCfg = Release|Any CPU
 		{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}.Release|x86.Build.0 = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|x64.Build.0 = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99661893-6164-4D8E-9B98-13ABDE67CC49} = {27E1A155-511C-4D01-98B4-17959D631882}
+		{46E05C75-BEFB-4A13-A916-21F160D12817} = {BDFAA533-6794-4999-A6FB-5E31B904FC54}
+		{295AA95F-4E29-4115-A10E-D1F4D3A2FA95} = {0CBD72E2-2216-4E5B-9375-B5E437D9D49A}
+		{330BF049-C3DC-4398-A71F-E1D3D05ED5F4} = {0CBD72E2-2216-4E5B-9375-B5E437D9D49A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F23DE6B8-C068-4A37-8C43-17A3D379A14F}

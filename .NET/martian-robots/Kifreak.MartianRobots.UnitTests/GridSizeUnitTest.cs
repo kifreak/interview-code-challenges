@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Kifreak.MartianRobots.Lib.Controller;
+using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
-using Newtonsoft.Json.Serialization;
 using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
@@ -35,19 +35,19 @@ namespace Kifreak.MartianRobots.UnitTests
             [Fact]
             public void AddRobotsToManagerOk()
             {
-                RobotManager manager = new RobotManager(new AvoidArea(), new GridSize(5, 5));
+                RobotManager manager = new RobotManager(new AvoidArea(), new GridSize(5, 5), new ActionFactory());
                 RobotMovement robotMovement = new RobotMovement();
                 AvoidArea avoidArea = new AvoidArea();
-                manager.AddRobotEngines(
+                manager.AddRobot(
                     new Robot(
-                    new Position(0,0,0), robotMovement,avoidArea));
-                manager.AddRobotEngines(
+                    new Position(0,0,0), robotMovement,avoidArea, new Instructions(new [] {"F","F","F"})));
+                manager.AddRobot(
                     new Robot(
-                        new Position(1, 1, 0), robotMovement, avoidArea));
-                Assert.NotEmpty(manager.RobotEngines);
-                Assert.Equal(2, manager.RobotEngines.Count);
-                Assert.Equal(0, manager.RobotEngines.First().CurrentPosition.X);
-                Assert.Equal(1, manager.RobotEngines.Last().CurrentPosition.X);
+                        new Position(1, 1, 0), robotMovement, avoidArea, new Instructions(new [] { "F","F","F"})));
+                Assert.NotEmpty(manager.Robots);
+                Assert.Equal(2, manager.Robots.Count);
+                Assert.Equal(0, manager.Robots.First().CurrentPosition.X);
+                Assert.Equal(1, manager.Robots.Last().CurrentPosition.X);
             }
 
 

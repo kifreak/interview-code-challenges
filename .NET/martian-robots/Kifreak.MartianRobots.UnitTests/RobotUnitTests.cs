@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kifreak.MartianRobots.Lib.Controller;
-using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Models;
 using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
-    public class RobotEngineUnitTests: IDisposable
+    public class RobotUnitTests: IDisposable
     {
         private Robot _robot;
-        public RobotEngineUnitTests()
+        public RobotUnitTests()
         {
             _robot = new Robot(
                 new Position(0,0,0),
                 new RobotMovement(), 
-                new AvoidArea()
+                new AvoidArea(),
+                new Instructions(new [] {"F","F","F"})
                 );
         }
         [Fact]
