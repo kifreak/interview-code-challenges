@@ -12,6 +12,8 @@ namespace Kifreak.MartianRobots.Lib.Controller
         public GridSize Grid { get; }
 
         public List<IRobot> Robots;
+
+        //TODO: Concrete the avoidArea (Insert by each robot or inserted by the manager or both cases). Change its name?
         public RobotManager(IAvoidArea avoidArea, GridSize grid,IActionFactory actionFactory)
         {
             _actionFactory = actionFactory;
@@ -43,6 +45,10 @@ namespace Kifreak.MartianRobots.Lib.Controller
             }
             foreach (string action in robot.Instructions.Actions)
             {
+                if (robot.Status == ERobotStatus.LOST)
+                {
+                    break;
+                }
                 IActionController actionController = _actionFactory.CreateInstance(action);
                 actionController.ExecuteAction(robot);
             }

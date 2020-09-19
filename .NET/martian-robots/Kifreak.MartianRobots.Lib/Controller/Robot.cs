@@ -1,4 +1,5 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 
 namespace Kifreak.MartianRobots.Lib.Controller
@@ -6,7 +7,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
     public class Robot: IRobot
     {
         public Position CurrentPosition { get; private set; }
-        public ERobotStatus Status { get; }
+        public ERobotStatus Status { get; private set; }
         public IRobotMovement Movement { get; set; }
         public Instructions Instructions { get; }
         public IAvoidArea AvoidArea { get; }
@@ -17,7 +18,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
             Instructions instructions)
         {
             CurrentPosition = startPosition;
-            Status = ERobotStatus.Ok;
+            Status = ERobotStatus.OK;
             Movement = movement;
             AvoidArea = avoidArea;
             Instructions = instructions;
@@ -36,7 +37,18 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public void MoveForward()
         {
-            var nextPosition = Movement.MoveForwards(CurrentPosition);
+            Position nextPosition = null;
+            try
+            {
+                nextPosition = Movement.MoveForwards(CurrentPosition);
+            }
+            catch (PositionException exception)
+            {
+                nextPosition = CurrentPosition;
+                AvoidArea.AddAvoidArea(nextPosition);
+                Status = ERobotStatus.LOST;
+            }
+
             if (!AvoidArea.IsAvoidArea(nextPosition))
             {
                 CurrentPosition = nextPosition;
@@ -45,7 +57,8 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public override string ToString()
         {
-            return CurrentPosition.ToString();
+            string lostTest = Status == ERobotStatus.LOST ? $" {Status}" : string.Empty;
+            return $"{CurrentPosition.ToString()}{lostTest}";
         }
     }
 }

@@ -52,8 +52,23 @@ namespace Kifreak.MartianRobots.IntegratedTests
             
             Assert.Equal("0 0 S", robot1.ToString());
             Assert.Equal("1 0 N", robot2.ToString());
+        }
 
+        [Fact]
+        public void MoveRobotToLostPositionAndTheOtherDoesntTakeThisWay()
+        {
+            Instructions robot1Instructions = new Instructions(new[] { "F", "L", "F", "R", "F" });
+            IRobot robot1 = new Robot(new Position(0, 0, 0),
+                _robotMovement, _avoidArea,
+                robot1Instructions);
+            Instructions robot2Instructions = new Instructions(new[] { "R", "R", "F", "F" });
+            IRobot robot2 = new Robot(new Position(1, 1, 90),
+                _robotMovement, _avoidArea,
+                robot2Instructions);
+            ExecuteRobotManager(new List<IRobot> { robot1, robot2 });
 
+            Assert.Equal("0 1 W LOST", robot1.ToString());
+            Assert.Equal("1 1 W", robot2.ToString());
         }
 
         private void ExecuteRobotManager(List<IRobot> robots)

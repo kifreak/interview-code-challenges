@@ -2,6 +2,6 @@
 {
     public enum ERobotStatus
     {
-        Ok, Lost
+        OK, LOST
     }
 }
