@@ -66,7 +66,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
         }
         public override string ToString()
         {
-            string lostTest = Status == ERobotStatus.Lost ? $" {Status}" : string.Empty;
+            string lostTest = Status == ERobotStatus.Lost ? $" {Status.ToString().ToUpper()}" : string.Empty;
             return $"{CurrentPosition}{lostTest}";
         }
     }

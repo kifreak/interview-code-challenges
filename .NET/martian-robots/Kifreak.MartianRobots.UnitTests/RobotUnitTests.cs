@@ -107,7 +107,7 @@ namespace Kifreak.MartianRobots.UnitTests
             IRobot robot = new Robot(new Position(0, 0,0), _robotMovementMock.Object, _grid, _instructions);
             _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
             robot.MoveForward();
-            Assert.Equal("0 0 N Lost", robot.ToString());
+            Assert.Equal("0 0 N LOST", robot.ToString());
         }
         public void Dispose()
         {

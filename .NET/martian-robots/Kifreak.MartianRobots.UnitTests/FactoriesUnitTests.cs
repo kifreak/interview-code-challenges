@@ -1,5 +1,4 @@
-﻿using System;
-using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
+﻿using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
