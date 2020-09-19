@@ -1,4 +1,5 @@
-﻿using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
+﻿using System;
+using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
@@ -31,10 +32,12 @@ namespace Kifreak.MartianRobots.UnitTests
             IActionController rightAction = action.CreateInstance("R");
             IActionController forwardAction = action.CreateInstance("F");
             IActionController nullAction = action.CreateInstance("NoExist");
+            IActionController newAction = action.CreateInstance("Test");
             Assert.Equal("L", leftAction.Name);
             Assert.Equal("R", rightAction.Name);
             Assert.Equal("F", forwardAction.Name);
             Assert.Equal("NoAction", nullAction.Name);
+            Assert.Equal("Test", newAction.Name);
         }
         
     }

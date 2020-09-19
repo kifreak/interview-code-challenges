@@ -25,7 +25,10 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         private int GetNextOrientation(int degrees, int currentOrientation)
         {
-
+            
+            currentOrientation = 
+                (currentOrientation > 360 ||  currentOrientation < 0)? 0
+                    : currentOrientation;
             int nextOrientation = currentOrientation + degrees;
             nextOrientation = nextOrientation < 0 ? 270 : nextOrientation > 270 ? 0 : nextOrientation;
             return nextOrientation;

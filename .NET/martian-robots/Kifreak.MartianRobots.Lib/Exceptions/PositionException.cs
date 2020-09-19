@@ -9,5 +9,6 @@ namespace Kifreak.MartianRobots.Lib.Exceptions
         {
             
         }
+        public PositionException(): base("Position not valid"){}
     }
 }

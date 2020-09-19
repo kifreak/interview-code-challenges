@@ -17,11 +17,11 @@ namespace Kifreak.MartianRobots.Lib.Controller
             IAvoidArea avoidArea,
             Instructions instructions)
         {
-            CurrentPosition = startPosition;
+            CurrentPosition = startPosition??throw new RobotBuildException(nameof(Position));
             Status = ERobotStatus.OK;
-            Movement = movement;
-            AvoidArea = avoidArea;
-            Instructions = instructions;
+            Movement = movement??throw new RobotBuildException(nameof(IRobotMovement));
+            AvoidArea = avoidArea??throw new RobotBuildException(nameof(IAvoidArea));
+            Instructions = instructions??throw new RobotBuildException(nameof(Instructions));
         }
 
         
@@ -58,7 +58,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
         public override string ToString()
         {
             string lostTest = Status == ERobotStatus.LOST ? $" {Status}" : string.Empty;
-            return $"{CurrentPosition.ToString()}{lostTest}";
+            return $"{CurrentPosition}{lostTest}";
         }
     }
 }

@@ -12,16 +12,9 @@ namespace Kifreak.MartianRobots.Lib.Models
 
         public Instructions(string[] actions)
         {
-            SetActions(actions);
+            Actions = actions;
         }
 
-        private void SetActions(string[] actions)
-        {
-            if (actions != null)
-            {
-                Actions = actions;
-            }
-        }
         private bool ActionsIsValid(string[] actions)
         {
             return !(actions == null || actions.Length > 100);
