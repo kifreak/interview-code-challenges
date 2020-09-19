@@ -5,8 +5,8 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5870B6CE-B5BA-497E-81F0-E7C811113ED5}"
 	ProjectSection(SolutionItems) = preProject
-		.dockerfile = .dockerfile
 		.gitignore = .gitignore
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Console", "Kifreak.MartianRobots.Console\Kifreak.MartianRobots.Console.csproj", "{99661893-6164-4D8E-9B98-13ABDE67CC49}"
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Lib",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.UnitTests", "Kifreak.MartianRobots.UnitTests\Kifreak.MartianRobots.UnitTests.csproj", "{295AA95F-4E29-4115-A10E-D1F4D3A2FA95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.IntegratedTests", "Kifreak.MartianRobots.IntegratedTests\Kifreak.MartianRobots.IntegratedTests.csproj", "{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.IntegratedTests", "Kifreak.MartianRobots.IntegratedTests\Kifreak.MartianRobots.IntegratedTests.csproj", "{330BF049-C3DC-4398-A71F-E1D3D05ED5F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Tests", "03. Tests", "{0CBD72E2-2216-4E5B-9375-B5E437D9D49A}"
 EndProject
