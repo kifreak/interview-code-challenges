@@ -55,7 +55,7 @@ namespace Kifreak.MartianRobots.IntegratedTests
         }
 
         [Fact]
-        public void MoveRobotToLostPositionAndTheOtherDoesntTakeThisWay()
+        public void MoveRobotToLostPositionAndTheOtherDoesNotTakeThisWay()
         {
             Instructions robot1Instructions = new Instructions(new[] { "F", "L", "F", "R", "F" });
             IRobot robot1 = new Robot(new Position(0, 0, 0),
