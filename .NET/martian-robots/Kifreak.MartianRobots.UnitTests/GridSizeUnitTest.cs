@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using Kifreak.MartianRobots.Lib.Controller;
-using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
+﻿using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 using Xunit;
@@ -16,9 +13,9 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(50, 2)]
         public void CreateGridSizeOk(int x, int y)
         {
-            GridSize gridSize = new GridSize(x,y);
-            Assert.Equal(x, gridSize.X);
-            Assert.Equal(y, gridSize.Y);
+            Grid grid = new Grid(x,y, new NotAllowPosition());
+            Assert.Equal(x, grid.X);
+            Assert.Equal(y, grid.Y);
         }
 
         [Theory]
@@ -28,7 +25,7 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(52, 13)]
         public void CreateGridSizeKo(int x, int y)
         {
-            Assert.Throws<GridSizeException>(() => new GridSize(x, y));
+            Assert.Throws<GridSizeException>(() => new Grid(x, y,new NotAllowPosition()));
         }
     }
 }

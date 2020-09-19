@@ -7,17 +7,14 @@ namespace Kifreak.MartianRobots.Lib.Controller
     public class RobotManager
     {
         private readonly IActionFactory _actionFactory;
-        public IAvoidArea AvoidArea { get; }
-
-        public GridSize Grid { get; }
+        
+        public Grid Grid { get; }
 
         public List<IRobot> Robots;
-
-        //TODO: Concrete the avoidArea (Insert by each robot or inserted by the manager or both cases). Change its name?
-        public RobotManager(IAvoidArea avoidArea, GridSize grid,IActionFactory actionFactory)
+        
+        public RobotManager(Grid grid,IActionFactory actionFactory)
         {
             _actionFactory = actionFactory;
-            AvoidArea = avoidArea;
             Grid = grid;
             Robots = new List<IRobot>();
         }
@@ -45,7 +42,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
             }
             foreach (string action in robot.Instructions.Actions)
             {
-                if (robot.Status == ERobotStatus.LOST)
+                if (robot.Status == ERobotStatus.Lost)
                 {
                     break;
                 }

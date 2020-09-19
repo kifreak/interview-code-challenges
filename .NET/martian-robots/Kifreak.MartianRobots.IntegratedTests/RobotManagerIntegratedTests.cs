@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
@@ -13,14 +12,15 @@ namespace Kifreak.MartianRobots.IntegratedTests
     {
         private readonly IRobotMovement _robotMovement;
         private readonly IActionFactory _actionFactory;
-        private readonly GridSize _gridSize;
-        private AvoidArea _avoidArea;
+        private readonly Grid _grid;
+        private NotAllowPosition _notAllowPosition;
         public RobotManagerIntegratedTests()
         {
             _robotMovement = new RobotMovement();
             _actionFactory = new ActionFactory();
-            _gridSize = new GridSize(5,5);
-            _avoidArea = new AvoidArea();
+            _notAllowPosition = new NotAllowPosition();
+            _grid = new Grid(5,5, _notAllowPosition);
+            
         }
 
         [Fact]
@@ -28,8 +28,8 @@ namespace Kifreak.MartianRobots.IntegratedTests
         {
             Instructions robot1Instructions = new Instructions(new[] { "F", "F", "R", "F", "F" });
             Instructions robot2Instructions = new Instructions(new[] { "F", "F", "L", "F", "F" });
-            IRobot robot1 = new Robot(new Position(0, 0, 0), _robotMovement, _avoidArea, robot1Instructions);
-            IRobot robot2 = new Robot(new Position(0, 0, 90), _robotMovement, _avoidArea, robot2Instructions);
+            IRobot robot1 = new Robot(new Position(0, 0, 0), _robotMovement, _grid, robot1Instructions);
+            IRobot robot2 = new Robot(new Position(0, 0, 90), _robotMovement, _grid, robot2Instructions);
             ExecuteRobotManager(new List<IRobot> {robot1, robot2});
             
             Assert.Equal("2 2 E", robot1.ToString());
@@ -39,14 +39,14 @@ namespace Kifreak.MartianRobots.IntegratedTests
         [Fact]
         public void MoveRobotsToAndAvoidPosition()
         {
-            _avoidArea.AddAvoidArea(new Position(1,1,0));
+            _notAllowPosition.AddNotAllowedPosition(new Position(1,1,0));
             Instructions robot1Instructions = new Instructions(new []{"F","R","F","R","F"});
             IRobot robot1 = new Robot(new Position(0, 0, 0), 
-                _robotMovement, _avoidArea, 
+                _robotMovement, _grid, 
                 robot1Instructions);
             Instructions robot2Instructions = new Instructions(new[] { "F","F","F","F" });
             IRobot robot2 = new Robot(new Position(1, 0, 0),
-                _robotMovement, _avoidArea,
+                _robotMovement, _grid,
                 robot2Instructions);
             ExecuteRobotManager(new List<IRobot> {robot1, robot2});
             
@@ -59,27 +59,34 @@ namespace Kifreak.MartianRobots.IntegratedTests
         {
             Instructions robot1Instructions = new Instructions(new[] { "F", "L", "F", "R", "F" });
             IRobot robot1 = new Robot(new Position(0, 0, 0),
-                _robotMovement, _avoidArea,
+                _robotMovement, _grid,
                 robot1Instructions);
             Instructions robot2Instructions = new Instructions(new[] { "R", "R", "F", "F" });
             IRobot robot2 = new Robot(new Position(1, 1, 90),
-                _robotMovement, _avoidArea,
+                _robotMovement, _grid,
                 robot2Instructions);
-            ExecuteRobotManager(new List<IRobot> { robot1, robot2 });
+            Instructions robot3Instructions = new Instructions(new [] { "F", "F", "F", "F", "F", "F", "F", "F" });
+            IRobot robot3 = new Robot(new Position(1, 1, 0),
+                _robotMovement, _grid,
+                robot3Instructions);
 
-            Assert.Equal("0 1 W LOST", robot1.ToString());
+
+            ExecuteRobotManager(new List<IRobot> { robot1, robot2, robot3 });
+
+            Assert.Equal("0 1 W Lost", robot1.ToString());
             Assert.Equal("1 1 W", robot2.ToString());
+            Assert.Equal("1 4 N Lost", robot3.ToString());
         }
 
         private void ExecuteRobotManager(List<IRobot> robots)
         {
-            var manager = new RobotManager(_avoidArea, _gridSize, _actionFactory);
+            var manager = new RobotManager(_grid, _actionFactory);
             manager.AddRobot(robots);
             manager.ExecuteAllRobots();
         }
         public void Dispose()
         {
-            _avoidArea = new AvoidArea();
+            _notAllowPosition = new NotAllowPosition();
             
         }
     }

@@ -10,17 +10,17 @@ namespace Kifreak.MartianRobots.Lib.Controller
         public ERobotStatus Status { get; private set; }
         public IRobotMovement Movement { get; set; }
         public Instructions Instructions { get; }
-        public IAvoidArea AvoidArea { get; }
+        public Grid Grid { get; }
 
         public Robot(Position startPosition, 
             IRobotMovement movement, 
-            IAvoidArea avoidArea,
+            Grid grid,
             Instructions instructions)
         {
             CurrentPosition = startPosition??throw new RobotBuildException(nameof(Position));
-            Status = ERobotStatus.OK;
+            Status = ERobotStatus.Ok;
             Movement = movement??throw new RobotBuildException(nameof(IRobotMovement));
-            AvoidArea = avoidArea??throw new RobotBuildException(nameof(IAvoidArea));
+            Grid = grid ?? throw new RobotBuildException(nameof(Grid));
             Instructions = instructions??throw new RobotBuildException(nameof(Instructions));
         }
 
@@ -37,27 +37,36 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public void MoveForward()
         {
-            Position nextPosition = null;
+            Position nextPosition;
             try
             {
                 nextPosition = Movement.MoveForwards(CurrentPosition);
+                if (IsRobotOutSideGrid(nextPosition))
+                {
+                    throw new PositionException();
+                }
+
             }
-            catch (PositionException exception)
+            catch 
             {
                 nextPosition = CurrentPosition;
-                AvoidArea.AddAvoidArea(nextPosition);
-                Status = ERobotStatus.LOST;
+                Grid.NotAllow.AddNotAllowedPosition(CurrentPosition);
+                Status = ERobotStatus.Lost;
             }
 
-            if (!AvoidArea.IsAvoidArea(nextPosition))
+            if (!Grid.NotAllow.IsNotAllowPosition(nextPosition))
             {
                 CurrentPosition = nextPosition;
             }
         }
 
+        private bool IsRobotOutSideGrid(Position nextPosition)
+        {
+            return nextPosition.X >= Grid.X || nextPosition.Y >= Grid.Y;
+        }
         public override string ToString()
         {
-            string lostTest = Status == ERobotStatus.LOST ? $" {Status}" : string.Empty;
+            string lostTest = Status == ERobotStatus.Lost ? $" {Status}" : string.Empty;
             return $"{CurrentPosition}{lostTest}";
         }
     }

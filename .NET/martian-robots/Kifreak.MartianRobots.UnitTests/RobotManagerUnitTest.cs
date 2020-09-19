@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Kifreak.MartianRobots.Lib.Controller;
-using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
@@ -11,17 +10,18 @@ namespace Kifreak.MartianRobots.UnitTests
 {
     public class RobotManagerUnitTest
     {
-        private readonly Mock<IAvoidArea> _avoidAreaMock;
         private readonly Mock<IActionFactory> _actionFactoryMock;
         private readonly Mock<IRobotMovement> _robotMovement;
         private readonly RobotManager _manager;
         private readonly Mock<IActionController> _actionControllerMock;
+        private readonly Grid _grid;
         public RobotManagerUnitTest()
         {
-            _avoidAreaMock = new Mock<IAvoidArea>();
+            var notAllowMock = new Mock<INotAllowPosition>();
             _actionFactoryMock = new Mock<IActionFactory>();
             _robotMovement = new Mock<IRobotMovement>();
-            _manager = new RobotManager(_avoidAreaMock.Object, new GridSize(5, 5), _actionFactoryMock.Object);
+            _grid = new Grid(5, 5, notAllowMock.Object);
+            _manager = new RobotManager(_grid, _actionFactoryMock.Object);
             _actionControllerMock = new Mock<IActionController>();
             _actionFactoryMock.Setup(t => t.CreateInstance(It.IsAny<string>())).Returns(_actionControllerMock.Object);
         }
@@ -49,7 +49,7 @@ namespace Kifreak.MartianRobots.UnitTests
             _actionFactoryMock.Verify(factory => factory.CreateInstance("R"), Times.Exactly(robot.Instructions.Actions.Count(action => action=="R")));
             _actionFactoryMock.Verify(factory => factory.CreateInstance(It.IsAny<string>()), Times.Exactly(robot.Instructions.Actions.Length));
             _actionControllerMock.Verify(action => action.ExecuteAction(It.IsAny<IRobot>()), Times.Exactly(robot.Instructions.Actions.Length));
-            Assert.Equal(ERobotStatus.OK, robot.Status);
+            Assert.Equal(ERobotStatus.Ok, robot.Status);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Kifreak.MartianRobots.UnitTests
             _actionControllerMock.Setup(action => action.ExecuteAction(It.IsAny<IRobot>()))
                 .Callback(() => robot.MoveForward());
             _manager.ExecuteRobot(robot);
-            Assert.Equal(ERobotStatus.LOST, robot.Status);
+            Assert.Equal(ERobotStatus.Lost, robot.Status);
             _actionFactoryMock.Verify(factory => factory.CreateInstance(It.IsAny<string>()), Times.Once);
             _actionControllerMock.Verify(action => action.ExecuteAction(It.IsAny<IRobot>()), Times.Once);
 
@@ -69,7 +69,7 @@ namespace Kifreak.MartianRobots.UnitTests
         private IRobot CreateRobot(Position position)
         {
             return new Robot(
-                position, _robotMovement.Object, _avoidAreaMock.Object, new Instructions(new[] { "F", "L", "F","R", "F" }));
+                position, _robotMovement.Object, _grid, new Instructions(new[] { "F", "L", "F","R", "F" }));
         }
     }
 }
