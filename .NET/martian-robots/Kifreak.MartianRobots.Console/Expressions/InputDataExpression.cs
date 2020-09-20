@@ -6,6 +6,7 @@ using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 
 namespace Kifreak.MartianRobots.Console.Expressions
 {
@@ -45,7 +46,7 @@ namespace Kifreak.MartianRobots.Console.Expressions
         public RobotManager GetRobotManager()
         {
             RobotManager robotManager = new RobotManager(Entry.Grid, new NotAllowPosition(), new ActionFactory());
-            RobotMovement robotMovement = new RobotMovement();
+            RobotMovement robotMovement = new RobotMovement(new RobotMoveFactory());
             IEnumerable<Robot> robots = Entry.Positions
                 .Select((value, key) =>
                     new KeyValuePair<int, Position>(key, value))

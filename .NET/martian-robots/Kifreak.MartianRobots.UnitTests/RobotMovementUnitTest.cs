@@ -1,16 +1,20 @@
-﻿using Kifreak.MartianRobots.Lib.Controller;
+﻿using System;
+using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
     public class RobotMovementUnitTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private readonly IRobotMovement _movement;
 
         public RobotMovementUnitTest()
         {
-            _movement = new RobotMovement();
+            _movement = new RobotMovement(new RobotMoveFactory());
         }
 
         [Theory]
@@ -19,8 +23,6 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(180, 270)]
         [InlineData(270, 0)]
         [InlineData(120, 210)]
-        [InlineData(500, 0)]
-        [InlineData(-100, 270)]
         public void MoveRightOk(int currentOrientation, int targetOrientation)
         {
             int current = _movement.TurnRight(currentOrientation);
@@ -33,8 +35,6 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(180, 90)]
         [InlineData(90, 0)]
         [InlineData(120, 30)]
-        [InlineData(500, 0)]
-        [InlineData(-100, 270)]
         public void MoveLeftOk(int currentOrientation, int targetOrientation)
         {
             int current = _movement.TurnLeft(currentOrientation);

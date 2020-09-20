@@ -1,11 +1,11 @@
-﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
-using Kifreak.MartianRobots.Lib.Models;
+﻿using Kifreak.MartianRobots.Lib.Models;
 
 namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory.Controller
 {
     public class MoveEastController : IMovementController
     {
         public string Name => "East";
+        public int Orientation => 90;
 
         public Position GetNextPosition(Position position)
         {

@@ -1,25 +1,26 @@
-﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory.Controller;
 
 namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
 {
     public class RobotMoveFactory : IRobotMoveFactory
     {
-        private readonly Dictionary<int, Type> _instanceCreator = new Dictionary<int, Type>
+        private readonly List<IMovementController> _allMovements;
+        public RobotMoveFactory()
         {
-            { 0, typeof(MoveNorthController)},
-            { 90, typeof(MoveEastController)},
-            { 180, typeof(MoveSouthController)},
-            { 270, typeof(MoveWestController)},
-        };
+            Type targetType = typeof(IMovementController);
+            IEnumerable<Type> typeList = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assembly => assembly.GetTypes())
+                .Where(assembly => assembly.FullName != null && !assembly.FullName.Contains("Castle"))
+                .Where(type => type.GetInterfaces().Contains(targetType));
 
+            _allMovements = typeList.Select(type => Activator.CreateInstance(type) as IMovementController).ToList();
+        }
         public IMovementController CreateInstance(int orientation)
         {
-            return _instanceCreator.ContainsKey(orientation)
-                ? Activator.CreateInstance(_instanceCreator[orientation]) as IMovementController
-                : Activator.CreateInstance<NoMoveController>();
+            return _allMovements.FirstOrDefault(action => action.Orientation == orientation) ?? new NoMoveController();
         }
     }
 }

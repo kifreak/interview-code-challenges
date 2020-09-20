@@ -6,6 +6,7 @@ using Kifreak.MartianRobots.Lib.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,7 +23,7 @@ namespace Kifreak.MartianRobots.IntegratedTests
         public RobotManagerIntegratedTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _robotMovement = new RobotMovement();
+            _robotMovement = new RobotMovement(new RobotMoveFactory());
             _actionFactory = new ActionFactory();
             _notAllowPosition = new NotAllowPosition();
             _grid = new Grid(5, 5);
@@ -95,7 +96,7 @@ namespace Kifreak.MartianRobots.IntegratedTests
         {
             var grid = new Grid(5, 3);
             var manager = new RobotManager(grid, new NotAllowPosition(), new ActionFactory());
-            var movement = new RobotMovement();
+            var movement = new RobotMovement(new RobotMoveFactory());
             var robot1 = new Robot(new Position(1, 1, 90), movement, new Instructions("RFRFRFRF".ToCharArray().Select(t => t.ToString()).ToArray()));
             var robot2 = new Robot(new Position(3, 2, 0), movement, new Instructions("FRRFLLFFRRFLL".ToCharArray().Select(t => t.ToString()).ToArray()));
             var robot3 = new Robot(new Position(0, 3, 270), movement, new Instructions("LLFFFLFLFL".ToCharArray().Select(t => t.ToString()).ToArray()));

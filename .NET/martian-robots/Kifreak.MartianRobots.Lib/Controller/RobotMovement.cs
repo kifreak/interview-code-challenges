@@ -7,11 +7,11 @@ namespace Kifreak.MartianRobots.Lib.Controller
 {
     public class RobotMovement : IRobotMovement
     {
-        private readonly RobotMoveFactory _factory;
+        private readonly IRobotMoveFactory _factory;
 
-        public RobotMovement()
+        public RobotMovement(RobotMoveFactory factory)
         {
-            _factory = new RobotMoveFactory();
+            _factory = factory;
         }
 
         public int TurnLeft(int currentOrientation)

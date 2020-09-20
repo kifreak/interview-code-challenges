@@ -6,6 +6,8 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory.Controller
     {
         string Name { get; }
 
+        int Orientation { get; }
+
         Position GetNextPosition(Position position);
     }
 }

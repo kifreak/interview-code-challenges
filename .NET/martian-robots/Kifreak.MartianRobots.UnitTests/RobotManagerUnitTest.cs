@@ -1,4 +1,5 @@
-﻿using Kifreak.MartianRobots.Lib.Controller;
+﻿using System;
+using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
@@ -10,12 +11,12 @@ using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
-    public class RobotManagerUnitTest
+    public class RobotManagerUnitTest: IDisposable
     {
-        private readonly Mock<IActionFactory> _actionFactoryMock;
-        private readonly Mock<IRobotMovement> _robotMovement;
-        private readonly RobotManager _manager;
-        private readonly Mock<IActionController> _actionControllerMock;
+        private Mock<IActionFactory> _actionFactoryMock;
+        private Mock<IRobotMovement> _robotMovement;
+        private RobotManager _manager;
+        private Mock<IActionController> _actionControllerMock;
 
         public RobotManagerUnitTest()
         {
@@ -69,6 +70,14 @@ namespace Kifreak.MartianRobots.UnitTests
         {
             return new Robot(
                 position, _robotMovement.Object, new Instructions(new[] { "F", "L", "F", "R", "F" }));
+        }
+
+        public void Dispose()
+        {
+            _actionFactoryMock = null;
+            _robotMovement = null;
+            _manager = null;
+            _actionControllerMock = null;
         }
     }
 }

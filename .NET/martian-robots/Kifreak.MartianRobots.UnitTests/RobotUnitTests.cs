@@ -10,12 +10,12 @@ namespace Kifreak.MartianRobots.UnitTests
 {
     public class RobotUnitTests : IDisposable
     {
-        private readonly Mock<IRobotMovement> _robotMovementMock;
-        private readonly Position _startPosition;
-        private readonly Instructions _instructions;
+        private Mock<IRobotMovement> _robotMovementMock;
+        private Position _startPosition;
+        private Instructions _instructions;
         private IRobot _robot;
 
-        private readonly Position _moveForwardStaticPosition;
+        private Position _moveForwardStaticPosition;
 
         public RobotUnitTests()
         {
@@ -112,6 +112,10 @@ namespace Kifreak.MartianRobots.UnitTests
         public void Dispose()
         {
             _robot = null;
+            _robotMovementMock = null;
+            _startPosition = null;
+            _instructions = null;
+            _moveForwardStaticPosition = null;
         }
     }
 }
