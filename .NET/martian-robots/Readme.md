@@ -1,4 +1,4 @@
-# Martian Robots (solution)
+ Martian Robots (solution)
 
 ## Specification
 Control multiple robots in a flat Mars using your console. 
@@ -57,4 +57,21 @@ docker build -t kifreak/mars .
 ```
 docker run -i kifreak/mars
 ```
+
+## Create your own rules!
+*	Add new Actions:
+	-	To add new action, just create a class inherits from IActionController. We use the property 'Name' to link up with the instructions format.
+*	Add new Movements:
+	-	If you want to create new ways to move your robot, just create new IMovementController. 
+	-	If you want to modify the way your robot move (if the robot is  between 45º and 60º, move to ...), you´ll need to create new IRobotMovement and IRobotMoveFactory.
+*	You can create new robots classes that inherits from IRobot
+	-	Try this few examples (maybe will be necessary implement new IRobotMovement): 
+		*	Normal robot, that randomly convert into a broken robot that doesn't turn left.
+		*	Crazy robots doesn't follow your instructions.
+		*	T-800 robots that if go outside of the Grid, will say: "Hasta la vista, baby". And go back to the past! (Go to its first position).
+*	RobotManager its the main class of the application and has a strong dependency on Grid Model.
+*	IRobot interface has a strong dependency on the Coordinates System (Defined on Position Model) and on the Instruction Model.
+*	INotAllowPosition: This class is in charge of storing the Lost Position of all robots. 
+
+
 
