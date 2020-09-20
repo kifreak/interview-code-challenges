@@ -7,7 +7,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
 {
     public class ActionFactory: IActionFactory
     {
-        private readonly IEnumerable<IActionController> _allActions;
+        private readonly List<IActionController> _allActions;
         public ActionFactory()
         {
             Type targetType = typeof(IActionController);
@@ -15,8 +15,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.GetInterfaces().Contains(targetType));
                     
-            _allActions = typeList.Select(type => Activator.CreateInstance(type) as IActionController);
-
+            _allActions = typeList.Select(type => Activator.CreateInstance(type) as IActionController).ToList();
 
         }
         public IActionController CreateInstance(string name)

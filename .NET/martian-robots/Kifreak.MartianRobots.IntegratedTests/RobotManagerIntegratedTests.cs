@@ -1,23 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
 using Kifreak.MartianRobots.IntegratedTests.Implementations;
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
-using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Kifreak.MartianRobots.Lib.Models;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Kifreak.MartianRobots.IntegratedTests
 {
     public class RobotManagerIntegratedTests: IDisposable
     {
+        private readonly ITestOutputHelper _testOutputHelper;
         private readonly IRobotMovement _robotMovement;
         private readonly IActionFactory _actionFactory;
         private readonly Grid _grid;
         private NotAllowPosition _notAllowPosition;
-        public RobotManagerIntegratedTests()
+        public RobotManagerIntegratedTests(ITestOutputHelper testOutputHelper)
         {
+            _testOutputHelper = testOutputHelper;
             _robotMovement = new RobotMovement();
             _actionFactory = new ActionFactory();
             _notAllowPosition = new NotAllowPosition();
@@ -63,16 +67,88 @@ namespace Kifreak.MartianRobots.IntegratedTests
             Instructions robot2Instructions = new Instructions(new[] { "R", "R", "F", "F" });
             IRobot robot2 = new Robot(new Position(1, 1, 90),
                 _robotMovement, robot2Instructions);
-            Instructions robot3Instructions = new Instructions(new [] { "F", "F", "F", "F", "F", "F", "F", "F" });
-            IRobot robot3 = new Robot(new Position(1, 1, 0),
-                _robotMovement, robot3Instructions);
+           
 
 
-            ExecuteRobotManager( robot1, robot2, robot3);
+            ExecuteRobotManager( robot1, robot2);
 
             Assert.Equal("0 1 270 LOST", robot1.ToString());
             Assert.Equal("1 1 270", robot2.ToString());
-            Assert.Equal("1 4 0 LOST", robot3.ToString());
+            }
+
+        [Fact]
+        public void LostAllRobots()
+        {
+            Instructions instruction = new Instructions(new[] { "F", "F", "F", "F", "F"});
+            IRobot robot1 = new Robot(new Position(0, 0, 0),
+                _robotMovement, instruction);
+            IRobot robot2 = new Robot(new Position(0,0,90),
+                _robotMovement, instruction );
+            IRobot robot3 = new Robot(new Position(0,0,270),_robotMovement, instruction);
+            IRobot robot4 = new Robot(new Position(0, 0, 180), _robotMovement, instruction);
+            ExecuteRobotManager(robot1, robot2, robot3, robot4);
+            Assert.Equal("0 4 0 LOST", robot1.ToString());
+            Assert.Equal("4 0 90 LOST", robot2.ToString());
+            Assert.Equal("0 0 270 LOST", robot3.ToString());
+            Assert.Equal("0 0 180 LOST", robot4.ToString());
+
+        }
+
+        [Fact]
+        public void Move100RobotsInTheBiggestGrid()
+        {
+            DateTime start = DateTime.Now;
+            Random rmd = new Random();
+            var manager = new RobotManager(
+                new Grid(50, 50),
+                new NotAllowPosition(),
+                new ActionFactory()
+            );
+            for (int i = 0; i < 100; i++)
+            {
+                IRobot robot = new Robot(
+                    RandomPosition(rmd, 50, 50),
+                    _robotMovement,
+                    RandomInstructions(rmd)
+                    );
+                manager.AddRobot(robot);
+            }            
+            manager.ExecuteAllRobots();
+            DateTime end = DateTime.Now;
+            _testOutputHelper.WriteLine($"{(end - start).TotalMilliseconds:N0} milliseconds to execute");
+        }
+
+        private Position RandomPosition(Random rmd, int maxX, int maxY)
+        {
+            Dictionary<int,int> orientationDictionary = new Dictionary<int, int>
+            {
+                {0,0},
+                {1,90},
+                {2,180},
+                {3,270}
+            };
+            int x =rmd.Next(0, maxX);
+            int y = rmd.Next(0, maxY);
+            int orientation = rmd.Next(0, 3);
+
+            return new Position(x,y, orientationDictionary[orientation]);
+        }
+
+        private Instructions RandomInstructions(Random rmd)
+        {
+            Dictionary<int, string> instructionDictionary = new Dictionary<int,string>
+            {
+                {0,"F"},
+                {1,"R"},
+                {2,"L"}
+            };
+            List<string> actions = new List<string>();
+            for (int i = 0; i < 100; i++)
+            {
+                int action = rmd.Next(0, 3);
+                actions.Add(instructionDictionary[action]);
+            }
+            return new Instructions(actions.ToArray());
         }
 
         [Fact]

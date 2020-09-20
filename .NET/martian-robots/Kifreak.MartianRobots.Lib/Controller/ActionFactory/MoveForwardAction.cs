@@ -1,5 +1,4 @@
-﻿using System;
-using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 
