@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Kifreak.MartianRobots.IntegratedTests.Implementations;
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
@@ -74,6 +75,19 @@ namespace Kifreak.MartianRobots.IntegratedTests
             Assert.Equal("1 4 0 LOST", robot3.ToString());
         }
 
+        [Fact]
+        public void MoveRobot45DegreesIn90DegreesStructure()
+        {
+            IRobot robot1 = new Robot(new Position(0, 0, 0),
+                new FortyFiveDegreesMovement(),
+                new Instructions(new[] { "F", "R", "F", "R", "F", "R" }));
+            IRobot robot2 = new Robot(new Position(0, 0, 0),
+                new FortyFiveDegreesMovement(),
+                new Instructions(new[] { "F", "R", "F", "R", "F", "R", "R","F" }));
+            ExecuteRobotManager(robot1, robot2);
+            Assert.Equal("1 1 135", robot1.ToString());
+            Assert.Equal("1 0 180", robot2.ToString());
+        }
         private void ExecuteRobotManager(params IRobot[] robots)
         {
             var manager = new RobotManager(_grid, _notAllowPosition, _actionFactory);
