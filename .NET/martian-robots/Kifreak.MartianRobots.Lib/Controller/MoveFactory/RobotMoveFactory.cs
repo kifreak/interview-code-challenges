@@ -1,6 +1,7 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using System;
 using System.Collections.Generic;
+using Kifreak.MartianRobots.Lib.Controller.MoveFactory.Controller;
 
 namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
 {

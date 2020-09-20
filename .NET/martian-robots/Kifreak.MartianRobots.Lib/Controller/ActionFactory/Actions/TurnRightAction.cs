@@ -1,6 +1,6 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 
-namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
+namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory.Actions
 {
     public class TurnRightAction : IActionController
     {
