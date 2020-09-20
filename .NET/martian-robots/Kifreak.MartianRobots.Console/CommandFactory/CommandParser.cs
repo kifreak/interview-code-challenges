@@ -16,13 +16,10 @@ namespace Kifreak.MartianRobots.Console.CommandFactory
 
         internal ICommand ParseCommand(string[] args)
         {
-            ICommandFactory commandFactory = FindRequestCommand(args[0]??string.Empty);
+            ICommandFactory commandFactory = FindRequestCommand(args.Length > 0?args[0]:string.Empty);
             if (commandFactory == null)
             {
-                return new NotFoundCommand
-                {
-                    CommandExecuted = args.Length > 0 ? args[0] : "{Empty}"
-                };
+                return new NotFoundCommand();
             }
             
             return commandFactory.MakeCommand(args);

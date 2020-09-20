@@ -1,4 +1,6 @@
 ﻿using System;
+using Kifreak.MartianRobots.Console.ViewModel;
+using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 
 namespace Kifreak.MartianRobots.Console.Helpers
 {
@@ -54,6 +56,16 @@ namespace Kifreak.MartianRobots.Console.Helpers
         public static void LineSeparator()
         {
             System.Console.WriteLine("==========================================================================================");
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string ToPrint(this IRobot robot)
+        {
+            string positionString =
+                $"{robot.CurrentPosition.X} {robot.CurrentPosition.Y} {(EOrientation) robot.CurrentPosition.Orientation}";
+            return robot.ToString(positionString);
         }
     }
 }

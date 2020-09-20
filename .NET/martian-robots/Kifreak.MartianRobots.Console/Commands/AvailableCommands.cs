@@ -9,7 +9,8 @@ namespace Kifreak.MartianRobots.Console.Commands
         {
             return new ICommandFactory[]
             {
-                new HelpCommand()
+                new HelpCommand(),
+                new ManualRobotControllerCommand()
             };
         }
     }

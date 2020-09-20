@@ -35,7 +35,7 @@ namespace Kifreak.MartianRobots.Console.Commands
         public void ShowBasicHelp()
         {
             ConsoleHelper.JumpLine(1);
-            ConsoleHelper.NormalLine("Controler for robots in a flat Mars");
+            ConsoleHelper.NormalLine("Controller for robots in a flat Mars");
             ConsoleHelper.NormalLine( "Get more information about the command typing:");
             ConsoleHelper.InfoLine("help actionName");
             ConsoleHelper.JumpLine(1);

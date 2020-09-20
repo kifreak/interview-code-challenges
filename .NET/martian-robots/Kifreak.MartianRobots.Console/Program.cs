@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Kifreak.MartianRobots.Console.CommandFactory;
 using Kifreak.MartianRobots.Console.Commands;
 using Kifreak.MartianRobots.Console.Helpers;

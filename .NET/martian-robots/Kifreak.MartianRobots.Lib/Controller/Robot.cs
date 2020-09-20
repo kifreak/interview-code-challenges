@@ -49,8 +49,13 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public override string ToString()
         {
+            return ToString(CurrentPosition.ToString());
+        }
+
+        public string ToString(string position)
+        {
             string lostTest = Status == ERobotStatus.Lost ? $" {Status.ToString().ToUpper()}" : string.Empty;
-            return $"{CurrentPosition}{lostTest}";
+            return $"{position}{lostTest}";
         }
     }
 }
