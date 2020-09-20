@@ -32,7 +32,7 @@ namespace Kifreak.MartianRobots.Lib.Models
         
         public override string ToString()
         {
-            return $"{X} {Y} {(EOrientation)Orientation}";
+            return $"{X} {Y} {Orientation}";
         }
         private bool IsValidCoordinate(int coordinate)
         {
@@ -41,7 +41,7 @@ namespace Kifreak.MartianRobots.Lib.Models
 
         private bool IsValidOrientation(int orientation)
         {
-            return orientation == 0 || orientation == 90 || orientation == 180 || orientation == 270;
+            return orientation >= 0 && orientation < 360;
         }
 
     }

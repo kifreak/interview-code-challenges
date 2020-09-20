@@ -33,8 +33,8 @@ namespace Kifreak.MartianRobots.IntegratedTests
             IRobot robot2 = new Robot(new Position(0, 0, 90), _robotMovement, robot2Instructions);
             ExecuteRobotManager(robot1, robot2);
             
-            Assert.Equal("2 2 E", robot1.ToString());
-            Assert.Equal("2 2 N", robot2.ToString());
+            Assert.Equal("2 2 90", robot1.ToString());
+            Assert.Equal("2 2 0", robot2.ToString());
         }
 
         [Fact]
@@ -49,8 +49,8 @@ namespace Kifreak.MartianRobots.IntegratedTests
                 _robotMovement, robot2Instructions);
             ExecuteRobotManager(robot1, robot2);
             
-            Assert.Equal("0 0 S", robot1.ToString());
-            Assert.Equal("1 0 N", robot2.ToString());
+            Assert.Equal("0 0 180", robot1.ToString());
+            Assert.Equal("1 0 0", robot2.ToString());
         }
 
         [Fact]
@@ -69,9 +69,9 @@ namespace Kifreak.MartianRobots.IntegratedTests
 
             ExecuteRobotManager( robot1, robot2, robot3);
 
-            Assert.Equal("0 1 W LOST", robot1.ToString());
-            Assert.Equal("1 1 W", robot2.ToString());
-            Assert.Equal("1 4 N LOST", robot3.ToString());
+            Assert.Equal("0 1 270 LOST", robot1.ToString());
+            Assert.Equal("1 1 270", robot2.ToString());
+            Assert.Equal("1 4 0 LOST", robot3.ToString());
         }
 
         private void ExecuteRobotManager(params IRobot[] robots)

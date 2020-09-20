@@ -51,14 +51,14 @@ namespace Kifreak.MartianRobots.UnitTests
             Position position = _robot.GetNextPosition();
             _robotMovementMock.Verify(move => move.MoveForwards(It.IsAny<Position>()), Times.Once);
             Assert.Equal(_moveForwardStaticPosition.ToString(), position.ToString());
-            Assert.Equal("0 0 N", _robot.ToString());
+            Assert.Equal("0 0 0", _robot.ToString());
         }
 
         [Fact]
         public void RobotMoveToOk()
         {
             _robot.MoveTo(new Position(1,1,90));
-            Assert.Equal("1 1 E", _robot.ToString());
+            Assert.Equal("1 1 90", _robot.ToString());
         }
 
         [Fact]
@@ -90,10 +90,11 @@ namespace Kifreak.MartianRobots.UnitTests
         }
 
         [Theory]
-        [InlineData(0,0,0, "0 0 N")]
-        [InlineData(1,1,90, "1 1 E")]
-        [InlineData(10, 5, 180, "10 5 S")]
-        [InlineData(0, 50, 270, "0 50 W")]
+        [InlineData(0,0,0, "0 0 0")]
+        [InlineData(1,1,90, "1 1 90")]
+        [InlineData(10, 5, 180, "10 5 180")]
+        [InlineData(0, 50, 270, "0 50 270")]
+        [InlineData(0, 50, 123, "0 50 123")]
         public void RobotToStringVerificationWithOkStatue(int x, int y, int orientation, string expectToString)     
         {
             IRobot robot = new Robot(new Position(x,y,orientation), _robotMovementMock.Object, _instructions);
@@ -107,7 +108,7 @@ namespace Kifreak.MartianRobots.UnitTests
             _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
             Assert.Throws<PositionException>(() => _robot.GetNextPosition());
             _robot.LostRobot();
-            Assert.Equal("0 0 N LOST", _robot.ToString());
+            Assert.Equal("0 0 0 LOST", _robot.ToString());
         }
         public void Dispose()
         {
