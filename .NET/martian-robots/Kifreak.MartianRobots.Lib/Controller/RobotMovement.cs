@@ -6,6 +6,11 @@ namespace Kifreak.MartianRobots.Lib.Controller
 {
     public class RobotMovement : IRobotMovement
     {
+        private readonly RobotMoveFactory _factory;
+        public RobotMovement()
+        {
+            _factory = new RobotMoveFactory();
+        }
         public int TurnLeft(int currentOrientation)
         {
             return GetNextOrientation(-90, currentOrientation);
@@ -18,17 +23,12 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public Position MoveForwards(Position position)
         {
-            RobotMoveFactory factory = new RobotMoveFactory();
-            IMovementController movement = factory.CreateInstance(position.Orientation);
+            IMovementController movement = _factory.CreateInstance(position.Orientation);
             return movement.GetNextPosition(position);
         }
         
         private int GetNextOrientation(int degrees, int currentOrientation)
         {
-            
-            currentOrientation = 
-                (currentOrientation > 360 ||  currentOrientation < 0)? 0
-                    : currentOrientation;
             int nextOrientation = currentOrientation + degrees;
             nextOrientation = nextOrientation < 0 ? 270 : nextOrientation > 270 ? 0 : nextOrientation;
             return nextOrientation;

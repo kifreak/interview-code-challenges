@@ -13,7 +13,6 @@ namespace Kifreak.MartianRobots.UnitTests
         private readonly Mock<IRobotMovement> _robotMovementMock;
         private readonly Position _startPosition;
         private readonly Instructions _instructions;
-        private readonly Grid _grid;
         private IRobot _robot;
 
         private readonly Position _moveForwardStaticPosition;
@@ -24,7 +23,6 @@ namespace Kifreak.MartianRobots.UnitTests
             _robotMovementMock.Setup(movement => movement.TurnLeft(It.IsAny<int>())).Returns(0);
             _robotMovementMock.Setup(movement => movement.TurnRight(It.IsAny<int>())).Returns(90);
             _robotMovementMock.Setup(movement => movement.MoveForwards(It.IsAny<Position>())).Returns(_moveForwardStaticPosition);
-            _grid = new Grid(5, 5);
             _startPosition = new Position(0,0,0);
             _instructions = new Instructions(new []{"F"});
             _robot = new Robot(_startPosition, _robotMovementMock.Object, _instructions);

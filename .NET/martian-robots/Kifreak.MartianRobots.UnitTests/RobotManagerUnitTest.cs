@@ -14,14 +14,14 @@ namespace Kifreak.MartianRobots.UnitTests
         private readonly Mock<IRobotMovement> _robotMovement;
         private readonly RobotManager _manager;
         private readonly Mock<IActionController> _actionControllerMock;
-        private readonly Grid _grid;
+
         public RobotManagerUnitTest()
         {
             Mock<INotAllowPosition> notAllowMock = new Mock<INotAllowPosition>();
             _actionFactoryMock = new Mock<IActionFactory>();
             _robotMovement = new Mock<IRobotMovement>();
-            _grid = new Grid(5, 5);
-            _manager = new RobotManager(_grid, notAllowMock.Object, _actionFactoryMock.Object);
+            var grid = new Grid(5, 5);
+            _manager = new RobotManager(grid, notAllowMock.Object, _actionFactoryMock.Object);
             _actionControllerMock = new Mock<IActionController>();
             _actionFactoryMock.Setup(t => t.CreateInstance(It.IsAny<string>())).Returns(_actionControllerMock.Object);
         }

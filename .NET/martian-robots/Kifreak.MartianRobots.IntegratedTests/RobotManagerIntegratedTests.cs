@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Linq;
 using Kifreak.MartianRobots.IntegratedTests.Implementations;
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
@@ -64,7 +63,7 @@ namespace Kifreak.MartianRobots.IntegratedTests
             Instructions robot1Instructions = new Instructions(new[] { "F", "L", "F", "R", "F" });
             IRobot robot1 = new Robot(new Position(0, 0, 0),
                 _robotMovement, robot1Instructions);
-            Instructions robot2Instructions = new Instructions(new[] { "R", "R", "F", "F" });
+            Instructions robot2Instructions = new Instructions(new[] { "R", "R", "F", "F", "F" });
             IRobot robot2 = new Robot(new Position(1, 1, 90),
                 _robotMovement, robot2Instructions);
            
@@ -73,13 +72,13 @@ namespace Kifreak.MartianRobots.IntegratedTests
             ExecuteRobotManager( robot1, robot2);
 
             Assert.Equal("0 1 270 LOST", robot1.ToString());
-            Assert.Equal("1 1 270", robot2.ToString());
+            Assert.Equal("0 1 270", robot2.ToString());
             }
 
         [Fact]
         public void LostAllRobots()
         {
-            Instructions instruction = new Instructions(new[] { "F", "F", "F", "F", "F"});
+            Instructions instruction = new Instructions(new[] { "F", "F", "F", "F", "F", "F"});
             IRobot robot1 = new Robot(new Position(0, 0, 0),
                 _robotMovement, instruction);
             IRobot robot2 = new Robot(new Position(0,0,90),
@@ -87,37 +86,53 @@ namespace Kifreak.MartianRobots.IntegratedTests
             IRobot robot3 = new Robot(new Position(0,0,270),_robotMovement, instruction);
             IRobot robot4 = new Robot(new Position(0, 0, 180), _robotMovement, instruction);
             ExecuteRobotManager(robot1, robot2, robot3, robot4);
-            Assert.Equal("0 4 0 LOST", robot1.ToString());
-            Assert.Equal("4 0 90 LOST", robot2.ToString());
+            Assert.Equal("0 5 0 LOST", robot1.ToString());
+            Assert.Equal("5 0 90 LOST", robot2.ToString());
             Assert.Equal("0 0 270 LOST", robot3.ToString());
             Assert.Equal("0 0 180 LOST", robot4.ToString());
 
         }
 
         [Fact]
-        public void Move100RobotsInTheBiggestGrid()
+        public void SampleTest()
         {
-            DateTime start = DateTime.Now;
+            var grid = new Grid(5,3);
+            var manager = new RobotManager(grid, new NotAllowPosition(), new ActionFactory());
+            var movement = new RobotMovement();
+            var robot1 = new Robot(new Position(1,1,90), movement,new Instructions("RFRFRFRF".ToCharArray().Select(t => t.ToString()).ToArray()) );
+            var robot2 = new Robot(new Position(3, 2, 0), movement, new Instructions("FRRFLLFFRRFLL".ToCharArray().Select(t => t.ToString()).ToArray()));
+            var robot3 = new Robot(new Position(0, 3, 270), movement, new Instructions("LLFFFLFLFL".ToCharArray().Select(t => t.ToString()).ToArray()));
+            manager.AddRobot(new List<IRobot> {robot1, robot2, robot3});
+            manager.ExecuteAllRobots();
+            Assert.Equal("1 1 90", robot1.ToString());
+            Assert.Equal("3 3 0 LOST", robot2.ToString());
+            Assert.Equal("2 3 180", robot3.ToString());
+
+        }
+
+        [Fact]
+        public void Move1000RobotsInTheBiggestGrid()
+        {
             Random rmd = new Random();
             var manager = new RobotManager(
                 new Grid(50, 50),
                 new NotAllowPosition(),
                 new ActionFactory()
             );
-            for (int i = 0; i < 100; i++)
-            {
-                IRobot robot = new Robot(
+            var robots = Enumerable.Range(1, 1000)
+                .Select(i => 
+                    new Robot(
                     RandomPosition(rmd, 50, 50),
                     _robotMovement,
                     RandomInstructions(rmd)
-                    );
-                manager.AddRobot(robot);
-            }            
+                ));
+            manager.AddRobot(robots);
+            DateTime start = DateTime.Now;
             manager.ExecuteAllRobots();
             DateTime end = DateTime.Now;
             _testOutputHelper.WriteLine($"{(end - start).TotalMilliseconds:N0} milliseconds to execute");
         }
-
+        
         private Position RandomPosition(Random rmd, int maxX, int maxY)
         {
             Dictionary<int,int> orientationDictionary = new Dictionary<int, int>

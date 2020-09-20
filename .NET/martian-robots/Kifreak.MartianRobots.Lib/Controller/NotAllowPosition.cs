@@ -15,7 +15,10 @@ namespace Kifreak.MartianRobots.Lib.Controller
         }
         public bool IsNotAllowPosition(Position nextPosition)
         {
-            return _notAllow.Any(position => position.X == nextPosition.X && position.Y == nextPosition.Y);
+            return _notAllow.Any(position =>
+                // position.Equals(nextPosition)
+                position.X == nextPosition.X && position.Y == nextPosition.Y);
+
         }
 
         public void AddNotAllowedPosition(Position position)

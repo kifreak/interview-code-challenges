@@ -1,5 +1,4 @@
 ﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
-using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 
 namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
@@ -13,25 +12,26 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
             Position nextPosition;
             try
             {
-                 nextPosition = robot.GetNextPosition();
-                 if (robotManager.IsPositionOffGrid(nextPosition))
-                 {
-                    throw new PositionException();
-                 }
+                nextPosition = robot.GetNextPosition();
             }
             catch
             {
-                OffMap(robot, robotManager);
                 return;
             }
+            
             if (robotManager.NotAllowPosition.IsNotAllowPosition(nextPosition)) return;
+            if (robotManager.IsPositionOffGrid(nextPosition))
+            {
+                OffMap(robot, robotManager, nextPosition);
+                return;
+            }
             robot.MoveTo(nextPosition);
         }
 
-        private void OffMap(IRobot robot, RobotManager robotManager)
+        private void OffMap(IRobot robot, RobotManager robotManager, Position nextPosition)
         {
             robot.LostRobot();
-            robotManager.NotAllowPosition.AddNotAllowedPosition(robot.CurrentPosition);
+            robotManager.NotAllowPosition.AddNotAllowedPosition(nextPosition);
 
         }
     }

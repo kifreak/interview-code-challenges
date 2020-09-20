@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
+		Readme.md = Readme.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Console", "Kifreak.MartianRobots.Console\Kifreak.MartianRobots.Console.csproj", "{99661893-6164-4D8E-9B98-13ABDE67CC49}"
@@ -23,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Front", "01. Front", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Back-end", "02. Back-end", "{BDFAA533-6794-4999-A6FB-5E31B904FC54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kifreak.MartianRobots.Console.UnitTests", "Kifreak.MartianRobots.Console.UnitTests\Kifreak.MartianRobots.Console.UnitTests.csproj", "{475CD8F6-C09B-4E78-9157-B904B3E0A070}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kifreak.MartianRobots.Console.UnitTests", "Kifreak.MartianRobots.Console.UnitTests\Kifreak.MartianRobots.Console.UnitTests.csproj", "{475CD8F6-C09B-4E78-9157-B904B3E0A070}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,8 +11,9 @@ namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
         void TurnLeft();
         void TurnRight();
         Position GetNextPosition();
+        void MoveTo(Position position);
         void LostRobot();
         string ToString(string position);
-        void MoveTo(Position position);
+        
     }
 }

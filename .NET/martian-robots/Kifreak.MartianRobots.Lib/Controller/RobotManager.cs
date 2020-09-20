@@ -54,7 +54,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public bool IsPositionOffGrid(Position position)
         {
-            return position.X >= Grid.X || position.Y >= Grid.Y;
+            return position.X > Grid.X || position.X < 0 || position.Y < 0 || position.Y > Grid.Y;
         }
         
     }

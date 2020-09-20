@@ -29,14 +29,13 @@ namespace Kifreak.MartianRobots.Lib.Models
             get => _orientation;
             set => _orientation = IsValidOrientation(value) ? value : throw new PositionException("Orientation");
         }
-        
         public override string ToString()
         {
             return $"{X} {Y} {Orientation}";
         }
         private bool IsValidCoordinate(int coordinate)
         {
-            return coordinate >= 0 && coordinate <= 50;
+            return coordinate <= 50;
         }
 
         private bool IsValidOrientation(int orientation)

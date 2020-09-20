@@ -1,8 +1,4 @@
-using System;
-using System.Linq;
-using Kifreak.MartianRobots.Console.Expressions;
 using Kifreak.MartianRobots.Console.Expressions.Parsers;
-using Kifreak.MartianRobots.Console.ViewModel;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 using Xunit;

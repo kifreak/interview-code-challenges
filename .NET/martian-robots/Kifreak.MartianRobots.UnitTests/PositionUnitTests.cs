@@ -12,6 +12,8 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(50, 50,180)]
         [InlineData(25, 23, 270)]
         [InlineData(25, 30, 14)]
+        [InlineData(-5, 0, 0)]
+        [InlineData(0, -3, 90)]
         public void PositionParametersOk(int x, int y, int orientation)
         {
             Position position = new Position(x, y, orientation);
@@ -21,8 +23,6 @@ namespace Kifreak.MartianRobots.UnitTests
         }
 
         [Theory]
-        [InlineData(-5, 0,0)]
-        [InlineData(0, -3,90)]
         [InlineData(50, 51,180)]
         [InlineData(50000, 1,270)]
         public void PositionParameterKo(int x, int y, int orientation)

@@ -1,5 +1,4 @@
-﻿using Kifreak.MartianRobots.Lib.Controller;
-using Kifreak.MartianRobots.Lib.Exceptions;
+﻿using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
 using Xunit;
 
