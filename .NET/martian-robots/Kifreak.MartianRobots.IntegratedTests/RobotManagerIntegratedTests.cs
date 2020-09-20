@@ -73,9 +73,9 @@ namespace Kifreak.MartianRobots.IntegratedTests
 
             ExecuteRobotManager(new List<IRobot> { robot1, robot2, robot3 });
 
-            Assert.Equal("0 1 W Lost", robot1.ToString());
+            Assert.Equal("0 1 W LOST", robot1.ToString());
             Assert.Equal("1 1 W", robot2.ToString());
-            Assert.Equal("1 4 N Lost", robot3.ToString());
+            Assert.Equal("1 4 N LOST", robot3.ToString());
         }
 
         private void ExecuteRobotManager(List<IRobot> robots)
