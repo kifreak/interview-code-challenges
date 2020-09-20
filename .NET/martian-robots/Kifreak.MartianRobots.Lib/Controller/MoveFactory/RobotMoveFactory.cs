@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+using System;
 using System.Collections.Generic;
-using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 
 namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
 {
-
-    public class RobotMoveFactory: IRobotMoveFactory
+    public class RobotMoveFactory : IRobotMoveFactory
     {
         private readonly Dictionary<int, Type> _instanceCreator = new Dictionary<int, Type>
         {
@@ -14,6 +13,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
             { 180, typeof(MoveSouthController)},
             { 270, typeof(MoveWestController)},
         };
+
         public IMovementController CreateInstance(int orientation)
         {
             return _instanceCreator.ContainsKey(orientation)

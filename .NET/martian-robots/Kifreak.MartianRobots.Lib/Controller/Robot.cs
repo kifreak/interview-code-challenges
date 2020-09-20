@@ -4,24 +4,23 @@ using Kifreak.MartianRobots.Lib.Models;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
-    public class Robot: IRobot
+    public class Robot : IRobot
     {
         public Position CurrentPosition { get; private set; }
         public ERobotStatus Status { get; private set; }
         public IRobotMovement Movement { get; set; }
         public Instructions Instructions { get; }
-        
-        public Robot(Position startPosition, 
+
+        public Robot(Position startPosition,
             IRobotMovement movement,
             Instructions instructions)
         {
-            CurrentPosition = startPosition??throw new RobotBuildException(nameof(Position));
+            CurrentPosition = startPosition ?? throw new RobotBuildException(nameof(Position));
             Status = ERobotStatus.Ok;
-            Movement = movement??throw new RobotBuildException(nameof(IRobotMovement));
-            Instructions = instructions??throw new RobotBuildException(nameof(Instructions));
+            Movement = movement ?? throw new RobotBuildException(nameof(IRobotMovement));
+            Instructions = instructions ?? throw new RobotBuildException(nameof(Instructions));
         }
 
-        
         public void TurnLeft()
         {
             CurrentPosition.Orientation = Movement.TurnLeft(CurrentPosition.Orientation);

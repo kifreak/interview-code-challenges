@@ -9,8 +9,8 @@ namespace Kifreak.MartianRobots.Console.UnitTests
     {
         [Theory]
         [InlineData("1 1", 1, 1)]
-        [InlineData("50 50",50,50)]
-        public void ParsingGridOk(string line,  int expectedX, int expectedY)
+        [InlineData("50 50", 50, 50)]
+        public void ParsingGridOk(string line, int expectedX, int expectedY)
         {
             var grid = ConsoleUnitTestsHelpers.DataParser<GridParser, Grid>(line);
             Assert.NotNull(grid);
@@ -32,6 +32,5 @@ namespace Kifreak.MartianRobots.Console.UnitTests
         {
             Assert.Throws<GridSizeException>(() => ConsoleUnitTestsHelpers.DataParser<GridParser, Grid>(line));
         }
-        
     }
 }

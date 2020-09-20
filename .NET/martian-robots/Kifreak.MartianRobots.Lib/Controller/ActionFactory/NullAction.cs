@@ -2,12 +2,12 @@
 
 namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
 {
-    public class NullAction: IActionController
+    public class NullAction : IActionController
     {
         public string Name => "NoAction";
+
         public void ExecuteAction(IRobot robot, RobotManager robotManager)
         {
         }
-        
     }
 }

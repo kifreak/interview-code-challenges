@@ -7,9 +7,9 @@ namespace Kifreak.MartianRobots.UnitTests
     public class PositionUnitTests
     {
         [Theory]
-        [InlineData(0,0,0)]
-        [InlineData(3, 5,90)]
-        [InlineData(50, 50,180)]
+        [InlineData(0, 0, 0)]
+        [InlineData(3, 5, 90)]
+        [InlineData(50, 50, 180)]
         [InlineData(25, 23, 270)]
         [InlineData(25, 30, 14)]
         [InlineData(-5, 0, 0)]
@@ -23,20 +23,18 @@ namespace Kifreak.MartianRobots.UnitTests
         }
 
         [Theory]
-        [InlineData(50, 51,180)]
-        [InlineData(50000, 1,270)]
+        [InlineData(50, 51, 180)]
+        [InlineData(50000, 1, 270)]
         public void PositionParameterKo(int x, int y, int orientation)
         {
-            Assert.Throws<PositionException>(() => new Position(x, y,orientation));
+            Assert.Throws<PositionException>(() => new Position(x, y, orientation));
         }
 
         [Fact]
         public void ToStringTest()
         {
-            Position position = new Position(5,10,90);
+            Position position = new Position(5, 10, 90);
             Assert.Equal("5 10 90", position.ToString());
         }
-
-        
     }
 }

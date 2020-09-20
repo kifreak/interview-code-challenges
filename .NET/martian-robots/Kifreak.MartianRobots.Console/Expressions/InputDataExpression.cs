@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Kifreak.MartianRobots.Console.Expressions.Interfaces;
+﻿using Kifreak.MartianRobots.Console.Expressions.Interfaces;
 using Kifreak.MartianRobots.Console.Expressions.Parsers;
 using Kifreak.MartianRobots.Console.ViewModel;
 using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.ActionFactory;
 using Kifreak.MartianRobots.Lib.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kifreak.MartianRobots.Console.Expressions
 {
@@ -15,6 +15,7 @@ namespace Kifreak.MartianRobots.Console.Expressions
         private readonly IExpression _gridExpression;
         private readonly IExpression _positionExpression;
         private readonly IExpression _instructionExpression;
+
         public InputDataExpression()
         {
             Entry = new EntryData();
@@ -22,6 +23,7 @@ namespace Kifreak.MartianRobots.Console.Expressions
             _positionExpression = new Expression(new PositionParser());
             _instructionExpression = new Expression(new InstructionParser());
         }
+
         public void InsertNewData(string line)
         {
             if (Entry.Grid == null)
@@ -47,8 +49,8 @@ namespace Kifreak.MartianRobots.Console.Expressions
             IEnumerable<Robot> robots = Entry.Positions
                 .Select((value, key) =>
                     new KeyValuePair<int, Position>(key, value))
-                .Select(pair => 
-                    new Robot(pair.Value, robotMovement, 
+                .Select(pair =>
+                    new Robot(pair.Value, robotMovement,
                         Entry.Instructions[pair.Key]));
             robotManager.AddRobot(robots);
             return robotManager;

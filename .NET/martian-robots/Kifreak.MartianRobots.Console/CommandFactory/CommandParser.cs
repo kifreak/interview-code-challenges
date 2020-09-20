@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Kifreak.MartianRobots.Console.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kifreak.MartianRobots.Console.Commands;
 
 namespace Kifreak.MartianRobots.Console.CommandFactory
 {
@@ -16,13 +16,8 @@ namespace Kifreak.MartianRobots.Console.CommandFactory
 
         internal ICommand ParseCommand(string[] args)
         {
-            ICommandFactory commandFactory = FindRequestCommand(args.Length > 0?args[0]:string.Empty);
-            if (commandFactory == null)
-            {
-                return new NotFoundCommand();
-            }
-            
-            return commandFactory.MakeCommand(args);
+            ICommandFactory commandFactory = FindRequestCommand(args.Length > 0 ? args[0] : string.Empty);
+            return commandFactory == null ? new NotFoundCommand() : commandFactory.MakeCommand(args);
         }
 
         private ICommandFactory FindRequestCommand(string commandName)

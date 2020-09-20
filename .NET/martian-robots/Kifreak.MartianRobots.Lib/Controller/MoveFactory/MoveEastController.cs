@@ -6,6 +6,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
     public class MoveEastController : IMovementController
     {
         public string Name => "East";
+
         public Position GetNextPosition(Position position)
         {
             return new Position(position.X + 1, position.Y, position.Orientation);

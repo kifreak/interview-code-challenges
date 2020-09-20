@@ -1,8 +1,8 @@
-﻿using System;
-using Kifreak.MartianRobots.Console.Expressions.Interfaces;
+﻿using Kifreak.MartianRobots.Console.Expressions.Interfaces;
 using Kifreak.MartianRobots.Console.ViewModel;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
+using System;
 
 namespace Kifreak.MartianRobots.Console.Expressions.Parsers
 {

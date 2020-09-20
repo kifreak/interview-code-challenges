@@ -19,7 +19,6 @@ namespace Kifreak.MartianRobots.Console.UnitTests
             Assert.Equal(new Position(expectedX, expectedY, expectedOrientation).ToString(), position.ToString());
         }
 
-
         [Theory]
         [InlineData("")]
         [InlineData("0")]

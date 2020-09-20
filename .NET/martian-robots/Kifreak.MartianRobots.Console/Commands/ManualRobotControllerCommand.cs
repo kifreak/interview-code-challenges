@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Kifreak.MartianRobots.Console.CommandFactory;
+﻿using Kifreak.MartianRobots.Console.CommandFactory;
 using Kifreak.MartianRobots.Console.Expressions;
 using Kifreak.MartianRobots.Console.Helpers;
 using Kifreak.MartianRobots.Lib.Controller;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Kifreak.MartianRobots.Console.Commands
 {
@@ -57,6 +57,7 @@ namespace Kifreak.MartianRobots.Console.Commands
         public string CommandName => "";
         public string Description => "Control multiple robots in a flat Mars";
         public Dictionary<string, string> OptionsDescription => new Dictionary<string, string>();
+
         public ICommand MakeCommand(string[] arguments)
         {
             return new ManualRobotControllerCommand();

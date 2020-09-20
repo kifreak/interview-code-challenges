@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Kifreak.MartianRobots.Console.Expressions.Interfaces;
+using Kifreak.MartianRobots.Console.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Kifreak.MartianRobots.Console.Expressions.Interfaces;
-using Kifreak.MartianRobots.Console.ViewModel;
 
 namespace Kifreak.MartianRobots.Console.Expressions
 {
@@ -14,6 +14,7 @@ namespace Kifreak.MartianRobots.Console.Expressions
         {
             _parser = parser;
         }
+
         public void Interpret(EntryData context, string property, string item)
         {
             PropertyInfo propertyDefinition = context.GetType().GetProperty(property);
@@ -26,7 +27,7 @@ namespace Kifreak.MartianRobots.Console.Expressions
             if (propertyType.IsGenericType && (propertyType.GetGenericTypeDefinition()) == typeof(List<>))
             {
                 var list = propertyDefinition.GetValue(context);
-                propertyType.GetMethod("Add")?.Invoke(list, new[] {_parser.Parse(item)});
+                propertyType.GetMethod("Add")?.Invoke(list, new[] { _parser.Parse(item) });
             }
             else
             {

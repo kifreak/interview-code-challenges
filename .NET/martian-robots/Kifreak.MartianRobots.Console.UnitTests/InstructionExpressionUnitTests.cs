@@ -9,8 +9,8 @@ namespace Kifreak.MartianRobots.Console.UnitTests
     {
         [Theory]
         [InlineData("FFFF", "F", "F", "F", "F")]
-        [InlineData("FRL", "F","R","L")]
-        [InlineData("FF HH", "F","F"," ", "H", "H")]
+        [InlineData("FRL", "F", "R", "L")]
+        [InlineData("FF HH", "F", "F", " ", "H", "H")]
         public void ParsingInstructionsOk(string line, params string[] expected)
         {
             Instructions instruction = ConsoleUnitTestsHelpers.DataParser<InstructionParser, Instructions>(line);

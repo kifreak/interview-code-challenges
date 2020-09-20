@@ -14,25 +14,27 @@ namespace Kifreak.MartianRobots.Lib.Models
             Y = y;
             Orientation = orientation;
         }
-      
-        public int X 
-        {
+
+        public int X {
             get => _x;
             set => _x = IsValidCoordinate(value) ? value : throw new PositionException("x");
         }
+
         public int Y {
             get => _y;
             set => _y = IsValidCoordinate(value) ? value : throw new PositionException("y");
         }
-        public int Orientation
-        {
+
+        public int Orientation {
             get => _orientation;
             set => _orientation = IsValidOrientation(value) ? value : throw new PositionException("Orientation");
         }
+
         public override string ToString()
         {
             return $"{X} {Y} {Orientation}";
         }
+
         private bool IsValidCoordinate(int coordinate)
         {
             return coordinate <= 50;
@@ -42,6 +44,5 @@ namespace Kifreak.MartianRobots.Lib.Models
         {
             return orientation >= 0 && orientation < 360;
         }
-
     }
 }

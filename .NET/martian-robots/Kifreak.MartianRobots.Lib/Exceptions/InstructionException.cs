@@ -6,7 +6,6 @@ namespace Kifreak.MartianRobots.Lib.Exceptions
     {
         public InstructionException() : base("The instructions of the robot are not valid.")
         {
-
         }
     }
 }

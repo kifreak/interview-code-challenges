@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Kifreak.MartianRobots.Console.CommandFactory;
+using Kifreak.MartianRobots.Console.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Kifreak.MartianRobots.Console.CommandFactory;
-using Kifreak.MartianRobots.Console.Helpers;
 
 namespace Kifreak.MartianRobots.Console.Commands
 {
     public class HelpCommand : ICommand, ICommandFactory
     {
         #region ICommand
+
         public string Topic { get; set; }
         private IEnumerable<ICommandFactory> _availableCommands;
+
         public Task Execute()
         {
             _availableCommands = AvailableCommands.GetAvailableCommands();
@@ -36,10 +38,10 @@ namespace Kifreak.MartianRobots.Console.Commands
         {
             ConsoleHelper.JumpLine(1);
             ConsoleHelper.NormalLine("Controller for robots in a flat Mars");
-            ConsoleHelper.NormalLine( "Get more information about the command typing:");
+            ConsoleHelper.NormalLine("Get more information about the command typing:");
             ConsoleHelper.InfoLine("help actionName");
             ConsoleHelper.JumpLine(1);
-            
+
             foreach (var availableCommand in _availableCommands)
             {
                 ConsoleHelper.LineSeparator();
@@ -48,6 +50,7 @@ namespace Kifreak.MartianRobots.Console.Commands
             }
             ConsoleHelper.LineSeparator();
         }
+
         public void ShowSpecificHelp()
         {
             ICommandFactory command = _availableCommands.FirstOrDefault(
@@ -73,18 +76,20 @@ namespace Kifreak.MartianRobots.Console.Commands
                 }
             }
         }
-        #endregion
 
+        #endregion ICommand
 
         #region ICommandFactory
 
         public string CommandName => "Help";
         public string Description => "Show this help page";
-        public Dictionary<string, string> OptionsDescription => 
+
+        public Dictionary<string, string> OptionsDescription =>
             new Dictionary<string, string>
             {
                 {"Command", "Get more info about this command."}
             };
+
         public ICommand MakeCommand(string[] arguments)
         {
             return new HelpCommand
@@ -92,6 +97,7 @@ namespace Kifreak.MartianRobots.Console.Commands
                 Topic = arguments.Length > 1 ? arguments[1] : string.Empty
             };
         }
-        #endregion
+
+        #endregion ICommandFactory
     }
 }

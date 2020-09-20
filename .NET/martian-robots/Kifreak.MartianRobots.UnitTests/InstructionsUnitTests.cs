@@ -9,7 +9,7 @@ namespace Kifreak.MartianRobots.UnitTests
         [Fact]
         public void AddInstructionsOk()
         {
-            Instructions instructions = new Instructions(new []{"F","F","F"});
+            Instructions instructions = new Instructions(new[] { "F", "F", "F" });
             Assert.NotNull(instructions.Actions);
             Assert.NotEmpty(instructions.Actions);
             Assert.Equal(3, instructions.Actions.Length);

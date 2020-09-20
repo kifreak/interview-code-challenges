@@ -18,7 +18,7 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
             {
                 return;
             }
-            
+
             if (robotManager.NotAllowPosition.IsNotAllowPosition(nextPosition)) return;
             if (robotManager.IsPositionOffGrid(nextPosition))
             {
@@ -32,7 +32,6 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
         {
             robot.LostRobot();
             robotManager.NotAllowPosition.AddNotAllowedPosition(nextPosition);
-
         }
     }
 }

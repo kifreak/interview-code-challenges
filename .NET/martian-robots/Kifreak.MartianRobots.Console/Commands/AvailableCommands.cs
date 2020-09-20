@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Kifreak.MartianRobots.Console.CommandFactory;
+﻿using Kifreak.MartianRobots.Console.CommandFactory;
+using System.Collections.Generic;
 
 namespace Kifreak.MartianRobots.Console.Commands
 {

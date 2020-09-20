@@ -38,6 +38,5 @@ namespace Kifreak.MartianRobots.UnitTests
             Assert.Equal("NoAction", nullAction.Name);
             Assert.Equal("Test", newAction.Name);
         }
-        
     }
 }

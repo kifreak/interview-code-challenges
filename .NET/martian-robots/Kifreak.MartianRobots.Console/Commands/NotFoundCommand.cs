@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
-using Kifreak.MartianRobots.Console.CommandFactory;
+﻿using Kifreak.MartianRobots.Console.CommandFactory;
 using Kifreak.MartianRobots.Console.Helpers;
+using System.Threading.Tasks;
 
 namespace Kifreak.MartianRobots.Console.Commands
 {
-    public class NotFoundCommand: ICommand
+    public class NotFoundCommand : ICommand
     {
         public string CommandExecuted { get; set; }
+
         public Task Execute()
         {
             ConsoleHelper.Error($"Unknown option: {CommandExecuted}");

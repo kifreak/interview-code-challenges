@@ -7,12 +7,12 @@ namespace Kifreak.MartianRobots.UnitTests
     public class GridSizeUnitTest
     {
         [Theory]
-        [InlineData(1,1)]
+        [InlineData(1, 1)]
         [InlineData(10, 15)]
         [InlineData(50, 2)]
         public void CreateGridSizeOk(int x, int y)
         {
-            Grid grid = new Grid(x,y);
+            Grid grid = new Grid(x, y);
             Assert.Equal(x, grid.X);
             Assert.Equal(y, grid.Y);
         }

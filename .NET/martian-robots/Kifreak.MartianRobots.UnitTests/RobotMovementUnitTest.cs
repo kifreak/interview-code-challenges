@@ -7,12 +7,14 @@ namespace Kifreak.MartianRobots.UnitTests
     public class RobotMovementUnitTest
     {
         private readonly IRobotMovement _movement;
+
         public RobotMovementUnitTest()
         {
             _movement = new RobotMovement();
         }
+
         [Theory]
-        [InlineData(0,90)]
+        [InlineData(0, 90)]
         [InlineData(90, 180)]
         [InlineData(180, 270)]
         [InlineData(270, 0)]
@@ -21,9 +23,10 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(-100, 270)]
         public void MoveRightOk(int currentOrientation, int targetOrientation)
         {
-            int current =_movement.TurnRight(currentOrientation);
+            int current = _movement.TurnRight(currentOrientation);
             Assert.Equal(targetOrientation, current);
         }
+
         [Theory]
         [InlineData(0, 270)]
         [InlineData(270, 180)]
@@ -37,6 +40,5 @@ namespace Kifreak.MartianRobots.UnitTests
             int current = _movement.TurnLeft(currentOrientation);
             Assert.Equal(targetOrientation, current);
         }
-        
     }
 }

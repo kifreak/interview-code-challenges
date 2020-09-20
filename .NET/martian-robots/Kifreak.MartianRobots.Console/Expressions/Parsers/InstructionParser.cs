@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Kifreak.MartianRobots.Console.Expressions.Interfaces;
+﻿using Kifreak.MartianRobots.Console.Expressions.Interfaces;
 using Kifreak.MartianRobots.Lib.Exceptions;
 using Kifreak.MartianRobots.Lib.Models;
+using System.Linq;
 
 namespace Kifreak.MartianRobots.Console.Expressions.Parsers
 {

@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Kifreak.MartianRobots.Lib.Models;
+﻿using Kifreak.MartianRobots.Lib.Models;
+using System.Collections.Generic;
 
 namespace Kifreak.MartianRobots.Console.ViewModel
 {
     public class EntryData
     {
-        public List<Position> Positions { get; set;}
+        public List<Position> Positions { get; set; }
         public List<Instructions> Instructions { get; set; }
         public Grid Grid { get; set; }
 

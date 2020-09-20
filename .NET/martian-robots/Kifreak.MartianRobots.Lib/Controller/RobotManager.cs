@@ -1,18 +1,19 @@
-﻿using System.Collections.Generic;
-using Kifreak.MartianRobots.Lib.Controller.Interfaces;
+﻿using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Models;
+using System.Collections.Generic;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
     public class RobotManager
     {
         private readonly IActionFactory _actionFactory;
-        
+
         public Grid Grid { get; }
 
         public List<IRobot> Robots { get; }
         public INotAllowPosition NotAllowPosition { get; }
-        public RobotManager(Grid grid,INotAllowPosition notAllowPosition, IActionFactory actionFactory)
+
+        public RobotManager(Grid grid, INotAllowPosition notAllowPosition, IActionFactory actionFactory)
         {
             _actionFactory = actionFactory;
             Grid = grid;
@@ -56,6 +57,5 @@ namespace Kifreak.MartianRobots.Lib.Controller
         {
             return position.X > Grid.X || position.X < 0 || position.Y < 0 || position.Y > Grid.Y;
         }
-        
     }
 }
