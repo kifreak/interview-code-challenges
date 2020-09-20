@@ -11,22 +11,23 @@ namespace Kifreak.MartianRobots.UnitTests
     public class RobotUnitTests: IDisposable
     {
         private readonly Mock<IRobotMovement> _robotMovementMock;
-        private readonly Mock<INotAllowPosition> _notAllowMock;
-        private readonly Position _position;
+        private readonly Position _startPosition;
         private readonly Instructions _instructions;
         private readonly Grid _grid;
         private IRobot _robot;
+
+        private readonly Position _moveForwardStaticPosition;
         public RobotUnitTests()
         {
+            _moveForwardStaticPosition = new Position(0, 1, 0);
             _robotMovementMock = new Mock<IRobotMovement>();
             _robotMovementMock.Setup(movement => movement.TurnLeft(It.IsAny<int>())).Returns(0);
             _robotMovementMock.Setup(movement => movement.TurnRight(It.IsAny<int>())).Returns(90);
-            _robotMovementMock.Setup(movement => movement.MoveForwards(It.IsAny<Position>())).Returns(new Position(1,0,0));
-            _notAllowMock = new Mock<INotAllowPosition>();
-            _grid = new Grid(5, 5, _notAllowMock.Object);
-            _position = new Position(0,0,0);
+            _robotMovementMock.Setup(movement => movement.MoveForwards(It.IsAny<Position>())).Returns(_moveForwardStaticPosition);
+            _grid = new Grid(5, 5);
+            _startPosition = new Position(0,0,0);
             _instructions = new Instructions(new []{"F"});
-            _robot = new Robot(_position, _robotMovementMock.Object, _grid, _instructions);
+            _robot = new Robot(_startPosition, _robotMovementMock.Object, _instructions);
         }
 
         [Fact]
@@ -45,49 +46,47 @@ namespace Kifreak.MartianRobots.UnitTests
         }
 
         [Fact]
-        public void RobotMoveForwardOk()
+        public void RobotGetNextPosition()
         {
-            _notAllowMock.Setup(t => t.IsNotAllowPosition(It.IsAny<Position>())).Returns(false);
-            _robot.MoveForward();
+            Position position = _robot.GetNextPosition();
             _robotMovementMock.Verify(move => move.MoveForwards(It.IsAny<Position>()), Times.Once);
-            _notAllowMock.Verify(avoid => avoid.IsNotAllowPosition(It.IsAny<Position>()), Times.Once);
-            _notAllowMock.Verify(avoid => avoid.AddNotAllowedPosition(It.IsAny<Position>()), Times.Never);
+            Assert.Equal(_moveForwardStaticPosition.ToString(), position.ToString());
+            Assert.Equal("0 0 N", _robot.ToString());
+        }
+
+        [Fact]
+        public void RobotMoveToOk()
+        {
+            _robot.MoveTo(new Position(1,1,90));
+            Assert.Equal("1 1 E", _robot.ToString());
+        }
+
+        [Fact]
+        public void RobotLost()
+        {
             Assert.Equal(ERobotStatus.Ok, _robot.Status);
-        }
-
-        [Fact]
-        public void RobotMoveForwardsOffGrid()
-        {
-            _notAllowMock.Setup(t => t.IsNotAllowPosition(It.IsAny<Position>())).Returns(false);
-            _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
-            _robot.MoveForward();
-            _robotMovementMock.Verify(t => t.MoveForwards(It.IsAny<Position>()),Times.Once);
-            _notAllowMock.Verify(avoid => avoid.AddNotAllowedPosition(It.IsAny<Position>()),Times.Once);
-            _notAllowMock.Verify(avoid => avoid.IsNotAllowPosition(It.IsAny<Position>()),Times.Once);
+            _robot.LostRobot();
             Assert.Equal(ERobotStatus.Lost, _robot.Status);
-            
+            Assert.Equal($"{_startPosition} LOST", _robot.ToString());
         }
 
         [Fact]
-        public void RobotMoveToNotAllowPosition()
+        public void RobotMoveForwardsOffGridCannotAssignPosition()
         {
-            _notAllowMock.Setup(t => t.IsNotAllowPosition(It.IsAny<Position>())).Returns(true);
-            _robot.MoveForward();
-            _robotMovementMock.Verify(move => move.MoveForwards(It.IsAny<Position>()),Times.Once);
-            _notAllowMock.Verify(avoid => avoid.AddNotAllowedPosition(It.IsAny<Position>()),Times.Never);
+            _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
+            Assert.Throws<PositionException>(() => _robot.GetNextPosition());
+            _robotMovementMock.Verify(t => t.MoveForwards(It.IsAny<Position>()),Times.Once);
         }
 
         [Fact]
         public void RobotBuildKoWithNullDependencies()
         {
             Assert.Throws<RobotBuildException>(() =>
-                new Robot(null, _robotMovementMock.Object, _grid, _instructions));
+                new Robot(null, _robotMovementMock.Object, _instructions));
             Assert.Throws<RobotBuildException>(() =>
-                new Robot(_position, null, _grid, _instructions));
+                new Robot(_startPosition, null, _instructions));
             Assert.Throws<RobotBuildException>(() =>
-                new Robot(_position, _robotMovementMock.Object, null, _instructions));
-            Assert.Throws<RobotBuildException>(() =>
-                new Robot(_position, _robotMovementMock.Object, _grid, null));
+                new Robot(_startPosition, _robotMovementMock.Object,  null));
         }
 
         [Theory]
@@ -97,17 +96,18 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(0, 50, 270, "0 50 W")]
         public void RobotToStringVerificationWithOkStatue(int x, int y, int orientation, string expectToString)     
         {
-            IRobot robot = new Robot(new Position(x,y,orientation), _robotMovementMock.Object, _grid, _instructions);
+            IRobot robot = new Robot(new Position(x,y,orientation), _robotMovementMock.Object, _instructions);
             Assert.Equal(expectToString, robot.ToString());
         }
 
         [Fact]
         public void RobotToStringVerificationWithLostState()
         {
-            IRobot robot = new Robot(new Position(0, 0,0), _robotMovementMock.Object, _grid, _instructions);
+            _robot = new Robot(new Position(0, 0,0), _robotMovementMock.Object, _instructions);
             _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
-            robot.MoveForward();
-            Assert.Equal("0 0 N LOST", robot.ToString());
+            Assert.Throws<PositionException>(() => _robot.GetNextPosition());
+            _robot.LostRobot();
+            Assert.Equal("0 0 N LOST", _robot.ToString());
         }
         public void Dispose()
         {

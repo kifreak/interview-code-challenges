@@ -10,12 +10,13 @@ namespace Kifreak.MartianRobots.Lib.Controller
         
         public Grid Grid { get; }
 
-        public List<IRobot> Robots;
-        
-        public RobotManager(Grid grid,IActionFactory actionFactory)
+        public List<IRobot> Robots { get; }
+        public INotAllowPosition NotAllowPosition { get; }
+        public RobotManager(Grid grid,INotAllowPosition notAllowPosition, IActionFactory actionFactory)
         {
             _actionFactory = actionFactory;
             Grid = grid;
+            NotAllowPosition = notAllowPosition;
             Robots = new List<IRobot>();
         }
 
@@ -47,8 +48,13 @@ namespace Kifreak.MartianRobots.Lib.Controller
                     break;
                 }
                 IActionController actionController = _actionFactory.CreateInstance(action);
-                actionController.ExecuteAction(robot);
+                actionController.ExecuteAction(robot, this);
             }
+        }
+
+        public bool IsPositionOffGrid(Position position)
+        {
+            return position.X >= Grid.X || position.Y >= Grid.Y;
         }
         
     }

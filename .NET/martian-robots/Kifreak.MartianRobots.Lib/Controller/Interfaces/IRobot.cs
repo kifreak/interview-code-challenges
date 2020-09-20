@@ -8,10 +8,10 @@ namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
         ERobotStatus Status { get; }
         IRobotMovement Movement { get; set; }
         Instructions Instructions { get; }
-        Grid Grid { get; }
-
         void TurnLeft();
         void TurnRight();
-        void MoveForward();
+        Position GetNextPosition();
+        void LostRobot();
+        void MoveTo(Position position);
     }
 }

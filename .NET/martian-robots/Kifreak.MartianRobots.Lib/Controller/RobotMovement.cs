@@ -22,7 +22,7 @@ namespace Kifreak.MartianRobots.Lib.Controller
             IMovementController movement = factory.CreateInstance(position.Orientation);
             return movement.GetNextPosition(position);
         }
-
+        
         private int GetNextOrientation(int degrees, int currentOrientation)
         {
             

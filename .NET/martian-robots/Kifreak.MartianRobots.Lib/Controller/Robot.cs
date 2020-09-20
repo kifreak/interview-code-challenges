@@ -10,17 +10,14 @@ namespace Kifreak.MartianRobots.Lib.Controller
         public ERobotStatus Status { get; private set; }
         public IRobotMovement Movement { get; set; }
         public Instructions Instructions { get; }
-        public Grid Grid { get; }
-
+        
         public Robot(Position startPosition, 
-            IRobotMovement movement, 
-            Grid grid,
+            IRobotMovement movement,
             Instructions instructions)
         {
             CurrentPosition = startPosition??throw new RobotBuildException(nameof(Position));
             Status = ERobotStatus.Ok;
             Movement = movement??throw new RobotBuildException(nameof(IRobotMovement));
-            Grid = grid ?? throw new RobotBuildException(nameof(Grid));
             Instructions = instructions??throw new RobotBuildException(nameof(Instructions));
         }
 
@@ -35,35 +32,21 @@ namespace Kifreak.MartianRobots.Lib.Controller
             CurrentPosition.Orientation = Movement.TurnRight(CurrentPosition.Orientation);
         }
 
-        public void MoveForward()
+        public Position GetNextPosition()
         {
-            Position nextPosition;
-            try
-            {
-                nextPosition = Movement.MoveForwards(CurrentPosition);
-                if (IsRobotOutSideGrid(nextPosition))
-                {
-                    throw new PositionException();
-                }
-
-            }
-            catch 
-            {
-                nextPosition = CurrentPosition;
-                Grid.NotAllow.AddNotAllowedPosition(CurrentPosition);
-                Status = ERobotStatus.Lost;
-            }
-
-            if (!Grid.NotAllow.IsNotAllowPosition(nextPosition))
-            {
-                CurrentPosition = nextPosition;
-            }
+            return Movement.MoveForwards(CurrentPosition);
         }
 
-        private bool IsRobotOutSideGrid(Position nextPosition)
+        public void LostRobot()
         {
-            return nextPosition.X >= Grid.X || nextPosition.Y >= Grid.Y;
+            Status = ERobotStatus.Lost;
         }
+
+        public void MoveTo(Position nextPosition)
+        {
+            CurrentPosition = nextPosition;
+        }
+
         public override string ToString()
         {
             string lostTest = Status == ERobotStatus.Lost ? $" {Status.ToString().ToUpper()}" : string.Empty;

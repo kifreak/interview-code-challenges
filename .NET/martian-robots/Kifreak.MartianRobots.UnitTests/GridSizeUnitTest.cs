@@ -13,7 +13,7 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(50, 2)]
         public void CreateGridSizeOk(int x, int y)
         {
-            Grid grid = new Grid(x,y, new NotAllowPosition());
+            Grid grid = new Grid(x,y);
             Assert.Equal(x, grid.X);
             Assert.Equal(y, grid.Y);
         }
@@ -25,7 +25,7 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(52, 13)]
         public void CreateGridSizeKo(int x, int y)
         {
-            Assert.Throws<GridSizeException>(() => new Grid(x, y,new NotAllowPosition()));
+            Assert.Throws<GridSizeException>(() => new Grid(x, y));
         }
     }
 }

@@ -8,11 +8,10 @@ namespace Kifreak.MartianRobots.Lib.Models
         private int _x;
         private int _y;
 
-        public Grid(int x, int y, INotAllowPosition notAllow)
+        public Grid(int x, int y)
         {
             X = x;
             Y = y;
-            NotAllow = notAllow;
         }
         
         public int X
@@ -25,7 +24,5 @@ namespace Kifreak.MartianRobots.Lib.Models
             private set => _y = value <= 50 && value > 0 ? value : throw new GridSizeException();
         }
 
-        public INotAllowPosition NotAllow { get; set; } 
-        
     }
 }

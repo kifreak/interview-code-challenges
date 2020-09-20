@@ -4,6 +4,6 @@
     {
         string Name { get; }
 
-        void ExecuteAction(IRobot robot);
+        void ExecuteAction(IRobot robot, RobotManager robotManager);
     }
 }
