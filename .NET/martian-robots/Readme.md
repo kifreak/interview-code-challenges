@@ -10,6 +10,7 @@ Each robot you want to create have a starting point (X,Y) and an orientation (No
 Each robot must have a list of instruction in order to move it.
 
 When a robot go "off" the surface of Mars, is lost forever (remember it's a flat planet, now your robot is somewhere in the space or maybe have been eating by a big daemon, we don't have the resource to know it). But your robot leave a "scent" that make the other robots ignore its movement to this coordinates where will be lost.
+
 ## Actions
 Each robot can do the next actions:
 *   L: the robot turns left 90 degrees and remains on the current grid point.
@@ -20,6 +21,7 @@ Each robot can do the next actions:
 *	The surface of Mars cannot be bigger than 50, 50.
 *	When a robot try to pass a coordinate bigger than 50, this instruction will be ignored.
 *   Each robot cannot have more than 100 instructions.
+*	IF the robot recieve an unknown action, this action don't provoke an exception, the robot just will ignore.
 
 ## Input
 The first line of input is the upper-right coordinates of the rectangular world, the lower-left coordinates are assumed to be 0, 0.
