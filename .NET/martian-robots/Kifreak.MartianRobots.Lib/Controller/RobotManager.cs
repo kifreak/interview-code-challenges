@@ -50,8 +50,8 @@ namespace Kifreak.MartianRobots.Lib.Controller
                 {
                     break;
                 }
-                IActionController actionController = _actionFactory.CreateInstance(action);
-                actionController.ExecuteAction(robot, this);
+
+                ExecuteActionController(action, robot);
             }
         }
 
@@ -59,5 +59,12 @@ namespace Kifreak.MartianRobots.Lib.Controller
         {
             return position.X > Grid.X || position.X < 0 || position.Y < 0 || position.Y > Grid.Y;
         }
+
+        private void ExecuteActionController(string action, IRobot robot) 
+        {
+            IActionController actionController = _actionFactory.CreateInstance(action);
+            actionController.ExecuteAction(robot, this);
+        }
+        
     }
 }

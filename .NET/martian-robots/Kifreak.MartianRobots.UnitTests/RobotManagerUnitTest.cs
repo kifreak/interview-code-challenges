@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
+    [Collection("UnitTest")]
     public class RobotManagerUnitTest: IDisposable
     {
         private Mock<IActionFactory> _actionFactoryMock;
@@ -57,10 +58,14 @@ namespace Kifreak.MartianRobots.UnitTests
         public void ExecuteRobotWithLostStatus()
         {
             _robotMovement.Setup(t => t.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
+
             IRobot robot = CreateRobot(new Position(1, 1, 0));
+            
             _actionControllerMock.Setup(action => action.ExecuteAction(It.IsAny<IRobot>(), It.IsAny<RobotManager>()))
                 .Callback(() => robot.LostRobot());
-            _manager.ExecuteRobot(robot);
+
+            _manager.ExecuteRobot(robot);            
+            
             Assert.Equal(ERobotStatus.Lost, robot.Status);
             _actionFactoryMock.Verify(factory => factory.CreateInstance(It.IsAny<string>()), Times.Once);
             _actionControllerMock.Verify(action => action.ExecuteAction(It.IsAny<IRobot>(), It.IsAny<RobotManager>()), Times.Once);

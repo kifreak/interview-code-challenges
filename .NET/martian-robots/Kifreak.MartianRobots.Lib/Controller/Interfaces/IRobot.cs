@@ -5,8 +5,9 @@ namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
     public interface IRobot
     {
         Position CurrentPosition { get; }
+
         ERobotStatus Status { get; }
-        IRobotMovement Movement { get; set; }
+        
         Instructions Instructions { get; }
 
         void TurnLeft();
@@ -18,6 +19,8 @@ namespace Kifreak.MartianRobots.Lib.Controller.Interfaces
         void MoveTo(Position position);
 
         void LostRobot();
+
+        void SetRobotMovement(IRobotMovement movement);
 
         string ToString(string position);
     }

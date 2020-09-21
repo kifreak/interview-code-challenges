@@ -1,15 +1,13 @@
-﻿using System;
-using Kifreak.MartianRobots.Lib.Controller;
+﻿using Kifreak.MartianRobots.Lib.Controller;
 using Kifreak.MartianRobots.Lib.Controller.Interfaces;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
+    [Collection("UnitTest")]
     public class RobotMovementUnitTest
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         private readonly IRobotMovement _movement;
 
         public RobotMovementUnitTest()
@@ -23,10 +21,10 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(180, 270)]
         [InlineData(270, 0)]
         [InlineData(120, 210)]
+        [InlineData(300, 30)]
         public void MoveRightOk(int currentOrientation, int targetOrientation)
         {
-            int current = _movement.TurnRight(currentOrientation);
-            Assert.Equal(targetOrientation, current);
+            Assert.Equal(targetOrientation, _movement.TurnRight(currentOrientation));
         }
 
         [Theory]
@@ -35,10 +33,10 @@ namespace Kifreak.MartianRobots.UnitTests
         [InlineData(180, 90)]
         [InlineData(90, 0)]
         [InlineData(120, 30)]
+        [InlineData(45, 315)]
         public void MoveLeftOk(int currentOrientation, int targetOrientation)
         {
-            int current = _movement.TurnLeft(currentOrientation);
-            Assert.Equal(targetOrientation, current);
+            Assert.Equal(targetOrientation, _movement.TurnLeft(currentOrientation));
         }
     }
 }

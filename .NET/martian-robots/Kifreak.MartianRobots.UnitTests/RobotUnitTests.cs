@@ -8,6 +8,7 @@ using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
+    [Collection("UnitTest")]
     public class RobotUnitTests : IDisposable
     {
         private Mock<IRobotMovement> _robotMovementMock;
@@ -72,7 +73,9 @@ namespace Kifreak.MartianRobots.UnitTests
         public void RobotMoveForwardsOffGridCannotAssignPosition()
         {
             _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
+            
             Assert.Throws<PositionException>(() => _robot.GetNextPosition());
+            
             _robotMovementMock.Verify(t => t.MoveForwards(It.IsAny<Position>()), Times.Once);
         }
 
@@ -96,14 +99,16 @@ namespace Kifreak.MartianRobots.UnitTests
         public void RobotToStringVerificationWithOkStatue(int x, int y, int orientation, string expectToString)
         {
             IRobot robot = new Robot(new Position(x, y, orientation), _robotMovementMock.Object, _instructions);
+            
             Assert.Equal(expectToString, robot.ToString());
         }
 
         [Fact]
         public void RobotToStringVerificationWithLostState()
         {
-            _robot = new Robot(new Position(0, 0, 0), _robotMovementMock.Object, _instructions);
             _robotMovementMock.Setup(move => move.MoveForwards(It.IsAny<Position>())).Throws<PositionException>();
+            _robot = new Robot(new Position(0, 0, 0), _robotMovementMock.Object, _instructions);
+            
             Assert.Throws<PositionException>(() => _robot.GetNextPosition());
             _robot.LostRobot();
             Assert.Equal("0 0 0 LOST", _robot.ToString());

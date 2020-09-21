@@ -13,7 +13,6 @@ namespace Kifreak.MartianRobots.Lib.Controller.MoveFactory
             Type targetType = typeof(IMovementController);
             IEnumerable<Type> typeList = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
-                .Where(assembly => assembly.FullName != null && !assembly.FullName.Contains("Castle"))
                 .Where(type => type.GetInterfaces().Contains(targetType));
 
             _allMovements = typeList.Select(type => Activator.CreateInstance(type) as IMovementController).ToList();

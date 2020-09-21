@@ -2,6 +2,7 @@
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory;
 using Kifreak.MartianRobots.Lib.Controller.MoveFactory.Controller;
 using Kifreak.MartianRobots.Lib.Models;
+using Kifreak.MartianRobots.Lib.Utils;
 
 namespace Kifreak.MartianRobots.Lib.Controller
 {
@@ -16,12 +17,12 @@ namespace Kifreak.MartianRobots.Lib.Controller
 
         public int TurnLeft(int currentOrientation)
         {
-            return GetNextOrientation(-90, currentOrientation);
+            return MathUtils.Rotate(-90, currentOrientation);
         }
 
         public int TurnRight(int currentOrientation)
         {
-            return GetNextOrientation(90, currentOrientation);
+            return MathUtils.Rotate(90, currentOrientation);
         }
 
         public Position MoveForwards(Position position)
@@ -30,11 +31,5 @@ namespace Kifreak.MartianRobots.Lib.Controller
             return movement.GetNextPosition(position);
         }
 
-        private int GetNextOrientation(int degrees, int currentOrientation)
-        {
-            int nextOrientation = currentOrientation + degrees;
-            nextOrientation = nextOrientation < 0 ? 270 : nextOrientation > 270 ? 0 : nextOrientation;
-            return nextOrientation;
-        }
     }
 }

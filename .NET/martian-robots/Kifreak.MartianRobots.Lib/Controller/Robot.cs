@@ -8,8 +8,9 @@ namespace Kifreak.MartianRobots.Lib.Controller
     {
         public Position CurrentPosition { get; private set; }
         public ERobotStatus Status { get; private set; }
-        public IRobotMovement Movement { get; set; }
         public Instructions Instructions { get; }
+
+        private IRobotMovement _movement;
 
         public Robot(Position startPosition,
             IRobotMovement movement,
@@ -17,28 +18,34 @@ namespace Kifreak.MartianRobots.Lib.Controller
         {
             CurrentPosition = startPosition ?? throw new RobotBuildException(nameof(Position));
             Status = ERobotStatus.Ok;
-            Movement = movement ?? throw new RobotBuildException(nameof(IRobotMovement));
+            SetRobotMovement(movement);
             Instructions = instructions ?? throw new RobotBuildException(nameof(Instructions));
         }
 
         public void TurnLeft()
         {
-            CurrentPosition.Orientation = Movement.TurnLeft(CurrentPosition.Orientation);
+            CurrentPosition.Orientation =
+                _movement.TurnLeft(CurrentPosition.Orientation);
         }
 
         public void TurnRight()
         {
-            CurrentPosition.Orientation = Movement.TurnRight(CurrentPosition.Orientation);
+            CurrentPosition.Orientation = _movement.TurnRight(CurrentPosition.Orientation);
         }
 
         public Position GetNextPosition()
         {
-            return Movement.MoveForwards(CurrentPosition);
+            return _movement.MoveForwards(CurrentPosition);
         }
 
         public void LostRobot()
         {
             Status = ERobotStatus.Lost;
+        }
+
+        public void SetRobotMovement(IRobotMovement movement)
+        {
+            _movement = movement ?? throw new RobotBuildException(nameof(IRobotMovement));
         }
 
         public void MoveTo(Position nextPosition)

@@ -14,7 +14,6 @@ namespace Kifreak.MartianRobots.Lib.Controller.ActionFactory
             Type targetType = typeof(IActionController);
             IEnumerable<Type> typeList = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
-                .Where(assembly => assembly.FullName != null && !assembly.FullName.Contains("Castle"))
                 .Where(type => type.GetInterfaces().Contains(targetType));
 
             _allActions = typeList.Select(type => Activator.CreateInstance(type) as IActionController).ToList();

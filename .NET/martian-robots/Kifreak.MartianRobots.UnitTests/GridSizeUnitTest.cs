@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Kifreak.MartianRobots.UnitTests
 {
+    [Collection("UnitTest")]
     public class GridSizeUnitTest
     {
         [Theory]
